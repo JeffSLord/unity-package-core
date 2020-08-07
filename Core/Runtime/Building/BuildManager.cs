@@ -1,0 +1,29 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Lord.Core {
+
+    public class BuildManager : MonoBehaviour {
+        public static BuildManager instance;
+        public Dictionary<Vector3Int, GameObject> buildGrid;
+
+        private void Awake() {
+            if (instance != null && instance != this) {
+                Destroy(this.gameObject);
+            } else {
+                instance = this;
+            }
+        }
+
+        // Start is called before the first frame update
+        void Start() {
+            buildGrid = new Dictionary<Vector3Int, GameObject>();
+        }
+
+        // Update is called once per frame
+        void Update() {
+
+        }
+    }
+}
