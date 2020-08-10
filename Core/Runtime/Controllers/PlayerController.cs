@@ -22,7 +22,7 @@ namespace Lord.Core {
         private void InputHandler() {
             if (Input.GetKeyDown(KeyCode.B)) {
                 if (builderController.enabled) {
-                    Destroy(builderController.debugCube);
+                    Destroy(builderController.ghostObject);
                 }
                 builderController.enabled = !builderController.enabled;
             }
