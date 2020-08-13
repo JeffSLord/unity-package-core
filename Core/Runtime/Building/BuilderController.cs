@@ -19,53 +19,49 @@ namespace Lord.Core {
         public int buildRotation;
         public Vector3Int buildLocation;
         public Vector3 rayDir;
+        public bool deleteMode;
 
         // Start is called before the first frame update
         void Start() {
             playerRaycast = GetComponent<PlayerRaycast>();
             buildRotation = 0;
+            deleteMode = false;
         }
 
         // Update is called once per frame
         void Update() {
-            buildLocation = BuildLocation(playerRaycast.hitLocation);
-            InputHandler();
             if (ghostObject != null) {
                 Destroy(ghostObject);
             }
-            if (playerRaycast.hitObject != null) {
-                Vector3 _target = new Vector3(buildLocation.x, buildLocation.y, buildLocation.z);
-                // debugCube = Instantiate(debugCubePrefab, _target, Quaternion.identity);
-                // debugCube.transform.Rotate(new Vector3(0, buildRotation, 0));
-                ghostObject = Instantiate(buildObject, _target, Quaternion.identity);
-                ghostObject.transform.Rotate(new Vector3(0, buildRotation, 0));
-                Renderer[] _renderers = ghostObject.GetComponentsInChildren<Renderer>();
-                foreach (Renderer _renders in _renderers) {
-                    _renders.material = buildGood;
-                }
-                Collider[] _colliders = ghostObject.GetComponentsInChildren<Collider>();
-                foreach (Collider _collider in _colliders) {
-                    Destroy(_collider);
+            if (!deleteMode) {
+                buildLocation = BuildLocation(playerRaycast.hitLocation);
+                if (playerRaycast.hitObject != null) {
+                    Vector3 _target = new Vector3(buildLocation.x, buildLocation.y, buildLocation.z);
+                    ghostObject = Instantiate(buildObject, _target, Quaternion.identity);
+                    ghostObject.transform.Rotate(new Vector3(0, buildRotation, 0));
+                    Renderer[] _renderers = ghostObject.GetComponentsInChildren<Renderer>();
+                    foreach (Renderer _renders in _renderers) {
+                        _renders.material = buildGood;
+                    }
+                    Collider[] _colliders = ghostObject.GetComponentsInChildren<Collider>();
+                    foreach (Collider _collider in _colliders) {
+                        Destroy(_collider);
+                    }
                 }
             }
-            // if (debug) {
-            //     if (debugCube != null)
-            //         Destroy(debugCube);
-            //     if (playerRaycast.hitObject != null) {
-            //         Vector3 _target = new Vector3(buildLocation.x, buildLocation.y, buildLocation.z);
-            //         debugCube = Instantiate(debugCubePrefab, _target, Quaternion.identity);
-            //         debugCube.transform.Rotate(new Vector3(0, buildRotation, 0));
-
-            //         Renderer[] _renderers = debugCube.GetComponentsInChildren<Renderer>();
-            //         foreach (Renderer _renders in _renderers) {
-            //             _renders.material = buildGood;
-            //         }
-            //     }
-            // }
+            InputHandler();
         }
         private void InputHandler() {
+            if (Input.GetKeyDown(KeyCode.LeftControl)) {
+                deleteMode = !deleteMode;
+            }
             if (Input.GetMouseButtonDown(0)) {
-                BuildObject(buildLocation);
+                if (!deleteMode)
+                    BuildObject(buildLocation);
+                else {
+                    if (playerRaycast.hitObject != null)
+                        DeleteObject(playerRaycast.hitObject);
+                }
             }
             if (Input.GetKeyDown(KeyCode.Z)) {
                 CalculateRotation(-90);
@@ -92,6 +88,11 @@ namespace Lord.Core {
                 lastBuilt.transform.Rotate(new Vector3(0, buildRotation, 0));
                 BuildManager.instance.buildGrid.Add(buildLocation, lastBuilt);
             }
+        }
+        private void DeleteObject(GameObject gameObject) {
+            Destroy(gameObject);
+            // probably change this to a build, 
+            //so it removes it's location from manager
         }
         private Vector3Int BuildLocation(Vector3 point) {
             rayDir = playerRaycast.ray.direction;
