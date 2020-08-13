@@ -55,6 +55,8 @@ namespace Lord.Core {
                 PlayerController _playerController = selector.GetComponent<PlayerController>();
                 if (_playerController != null) {
                     AssignCharacter(_playerController.character);
+                } else if (selector.GetComponent<Character>() != null) {
+                    AssignCharacter(selector.GetComponent<Character>());
                 }
             }
         }

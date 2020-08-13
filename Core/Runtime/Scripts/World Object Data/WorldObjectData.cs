@@ -7,5 +7,5 @@ using UnityEngine;
 public class WorldObjectData : ScriptableObject {
 
     public string objectName;
-
+    public string objectDescription;
 }
