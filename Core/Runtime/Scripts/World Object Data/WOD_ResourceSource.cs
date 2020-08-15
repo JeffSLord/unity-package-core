@@ -11,7 +11,7 @@ namespace Lord.Core {
         // public string objectDescription;
         public GameObject spawnableResource;
         // public float resourcesLeft;
-        public float totalHarvest;
+        public float totalResources;
         public float totalWork;
         // public Transform harvestPoint;
         // public Transform resourceSpawnPoint;

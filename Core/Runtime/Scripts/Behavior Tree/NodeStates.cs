@@ -1,5 +1,7 @@
-public enum NodeStates {
-    FAILURE,
-    SUCCESS,
-    RUNNING
+namespace Lord.Core {
+    public enum NodeStates {
+        FAILURE,
+        SUCCESS,
+        RUNNING
+    }
 }

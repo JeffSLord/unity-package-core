@@ -5,28 +5,18 @@ using UnityEngine;
 public class Selectable : MonoBehaviour {
 
     public delegate void SelectDelegate(GameObject selector, int option = 0);
-    public SelectDelegate selectDelegate;
+    public delegate void DeselectDelegate(GameObject selector);
+    public SelectDelegate select0Delegate;
+    public SelectDelegate select1Delegate;
+    public DeselectDelegate deselectDelegate;
 
-    void Awake() {
-        selectDelegate = DefaultDeselct;
-    }
-    private void DefaultSelect(GameObject selector, int option = 0) {
-
-    }
-    private void DefaultDeselct(GameObject selector, int option = 0) {
-
+    public void Select0(GameObject selector, int option = 0) {
+        select0Delegate(selector, option);
     }
     public void Select1(GameObject selector, int option = 0) {
-        selectDelegate(selector, option);
+        select1Delegate(selector, option);
     }
-    public void Select2(GameObject selector, int option = 0) {
-
-    }
-    public void Deselect() {
-
-    }
-
-    public static void PlayerControlerToResource() {
-
+    public void Deselect(GameObject selector) {
+        deselectDelegate(selector);
     }
 }

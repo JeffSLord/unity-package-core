@@ -103,8 +103,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7312122847767313594}
   - component: {fileID: 7312122847767313588}
-  - component: {fileID: 7312122847767313595}
-  - component: {fileID: 7312122847767313593}
+  - component: {fileID: 728356254315661481}
+  - component: {fileID: 6535086471671421986}
+  - component: {fileID: 6846082298311745245}
   m_Layer: 0
   m_Name: Resource Stone
   m_TagString: Untagged
@@ -148,7 +149,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7312122847767313595
+--- !u!114 &728356254315661481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7312122847767313592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 350fb0f7c5e297548a240f1951abbc6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6535086471671421986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   running: 0
   pickupDistance: 1
---- !u!114 &7312122847767313593
+--- !u!114 &6846082298311745245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,9 +184,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7312122847767313592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dbcebb1d81eca142a10702e394bcc71, type: 3}
+  m_Script: {fileID: 11500000, guid: 466d640fb449ac84a9a4e2e6093ed6a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldObjectData: {fileID: 0}
 --- !u!1 &7312122847780745505
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ namespace Lord.Core {
 
         private IEnumerator PickupCoroutine(Character character) {
             while (running) {
-                if (character.currentSelect != GetComponent<ISelectable>()) {
+                if (character.currentSelect != GetComponent<Selectable>()) {
                     StopAllCoroutines();
                     yield break;
                 }

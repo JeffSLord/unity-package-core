@@ -39,9 +39,9 @@ namespace Lord.Core {
         private void Select0() {
             GameObject _hitObject = playerRaycast.hitObject;
             if (_hitObject != null) {
-                ISelectable _hitSelectable = _hitObject.GetComponentInParent<ISelectable>();
+                Selectable _hitSelectable = _hitObject.GetComponentInParent<Selectable>();
                 if (_hitSelectable != null) {
-                    _hitSelectable.Select(this.gameObject);
+                    _hitSelectable.Select0(this.gameObject);
                 }
             }
         }
@@ -54,13 +54,16 @@ namespace Lord.Core {
                     character.currentSelect.Deselect(this.gameObject);
                     character.currentSelect = null;
                 }
-                ISelectable _hitSelectable = _hitObject.GetComponentInParent<ISelectable>();
+                Selectable _hitSelectable = _hitObject.GetComponentInParent<Selectable>();
                 if (_hitSelectable != null) {
-                    _hitSelectable.Select(this.gameObject, 1);
+                    _hitSelectable.Select1(this.gameObject, 1);
                     character.currentSelect = _hitSelectable;
                 } else {
-                    character.navMeshAgent.destination = playerRaycast.hitLocation;
-                    character.navMeshAgent.stoppingDistance = 1.0f;
+                    MoveBT moveContext = new MoveBT(character.navMeshAgent, playerRaycast.hitLocation);
+                    character.GetComponent<BehaviorTree>().SetNode(new ActionNode(moveContext.MoveToPoint));
+                    // WorkBT workBT = new WorkBT()
+                    // character.navMeshAgent.destination = playerRaycast.hitLocation;
+                    // character.navMeshAgent.stoppingDistance = 1.0f;
                 }
             }
         }

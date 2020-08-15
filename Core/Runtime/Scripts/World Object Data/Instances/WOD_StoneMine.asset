@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe4ebd2e296cea54cbf7f9224c405cf2, type: 3}
-  m_Name: WOD_Tree
+  m_Name: WOD_StoneMine
   m_EditorClassIdentifier: 
-  objectName: Tree
-  objectDescription: This is a tree.
-  spawnableResource: {fileID: 342398957768005299, guid: bc75c8a2462f7cf45bd378a4a7d2b855,
+  objectName: Stone Mine
+  objectDescription: This is a stone mine.
+  spawnableResource: {fileID: 7312122847767313592, guid: 1f49629e215f3e840a9d13c35047b078,
     type: 3}
   totalResources: 5
   totalWork: 5
-  harvestDistance: 1
+  harvestDistance: 3
