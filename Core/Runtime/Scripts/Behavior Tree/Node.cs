@@ -10,6 +10,9 @@ namespace Lord.Core {
 
         /* The current state of the node */
         protected NodeStates m_nodeState;
+        protected bool initialized;
+        /* Node name here */
+        public string nodeName;
 
         public NodeStates nodeState {
             get { return m_nodeState; }
@@ -21,5 +24,8 @@ namespace Lord.Core {
         /* Implementing classes use this method to evaluate the desired set of conditions */
         public abstract NodeStates Evaluate();
 
+        public virtual void Interrupt() {
+
+        }
     }
 }

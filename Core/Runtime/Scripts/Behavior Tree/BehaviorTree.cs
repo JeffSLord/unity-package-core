@@ -31,11 +31,14 @@ namespace Lord.Core {
                     case NodeStates.SUCCESS:
                         SetNode(null);
                         break;
+                    case NodeStates.FAILURE:
+                        SetNode(null);
+                        break;
                     default:
                         SetNode(null);
                         break;
                 }
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.25f);
             }
         }
 

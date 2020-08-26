@@ -8,44 +8,48 @@ namespace Lord.Core {
     public class WorkBT : MoveBT {
         public GameObject workObject;
         public Vector3 workPosition;
-        public Character character;
         public WorkBT(Character character, GameObject workObject, Vector3 workPosition):
-            base(character.navMeshAgent, workPosition) {
-                this.character = character;
+            base(character, workPosition) {
                 this.workObject = workObject;
                 this.workPosition = workPosition;
             }
 
-        public NodeStates WorkResourceSource() {
-            // Play animation?
+        private NodeStates WorkResourceSource() {
             if (workObject != null) {
-                // Debug.Log("Starting work part");
-                Debug.Log(workObject.name);
                 ResourceSource _resourceSource = workObject.GetComponent<ResourceSource>();
                 _resourceSource.AssignCharacter(character);
                 return NodeStates.RUNNING;
             } else {
-                Debug.Log("Work is SUCCESS");
+                this.character.animator.Rebind();
                 return NodeStates.SUCCESS;
             }
         }
-        public ActionNode WorkResourceSourceNode() {
-            return new ActionNode(WorkResourceSource);
+        public TaskNode WorkResourceSourceNode() {
+            return new TaskNode(WorkResourceSource, "Work Resource Source");
         }
-        public NodeStates PickupResource() {
-            return NodeStates.FAILURE;
-            // WOD_ResourceSource _wodResourceSource = workObject.GetComponent<ResourceSource>().worldObjectData;
-
-            // _wodResourceSource.spawn
-
-            // Item _item = workObject.GetComponent<ResourceSource>().worldObjectData.
+        private NodeStates WorkResourceSourceAnim() {
+            this.character.animator.Play("Attack", 0);
+            return NodeStates.SUCCESS;
         }
+        public TaskNode WorkResourceSourceAnimNode() {
+            return new TaskNode(WorkResourceSourceAnim, "Animation");
+        }
+        // private NodeStates WorkResourceSourceFinish() {
+        //     if (workObject)
+        //         this.character.animator.Rebind();
+        //     return NodeStates.SUCCESS;
+        // }
+        // public TaskNode WorkResourceSourceFinishNode() {
+        //     return new TaskNode(WorkResourceSourceFinishNode, "Work Finsished");
+        // }
         public Sequence WorkResourceSourceSequence() {
             ResourceSource _resourceSource = workObject.GetComponent<ResourceSource>();
             WOD_ResourceSource _wod = (WOD_ResourceSource) _resourceSource.worldObjectData;
-            stoppingDistance = _wod.harvestDistance;
+            this.stoppingDistance = _wod.harvestDistance;
             return new Sequence(new List<Node> {
-                MoveToPointNode(),
+                MoveSequence(),
+                TurnNode(),
+                WorkResourceSourceAnimNode(),
                 WorkResourceSourceNode()
             });
         }

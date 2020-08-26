@@ -104,9 +104,8 @@ GameObject:
   m_Component:
   - component: {fileID: 342398957768005301}
   - component: {fileID: 342398957768005302}
-  - component: {fileID: 3290991010853391539}
-  - component: {fileID: 6036295673775667370}
-  - component: {fileID: 8137704323416881741}
+  - component: {fileID: 442013157356962526}
+  - component: {fileID: 3826928074771917076}
   m_Layer: 0
   m_Name: Resource Wood
   m_TagString: Untagged
@@ -147,7 +146,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3290991010853391539
+--- !u!114 &442013157356962526
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,21 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350fb0f7c5e297548a240f1951abbc6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6036295673775667370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 342398957768005299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0504d7cd626a0a4386e0a7ae2123c9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  running: 0
-  pickupDistance: 1
---- !u!114 &8137704323416881741
+--- !u!114 &3826928074771917076
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

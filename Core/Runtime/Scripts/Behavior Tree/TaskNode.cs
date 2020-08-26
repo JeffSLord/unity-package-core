@@ -1,6 +1,6 @@
 ﻿namespace Lord.Core {
 
-    public class ActionNode : Node {
+    public class TaskNode : Node {
         /* Method signature for the action. */
         public delegate NodeStates ActionNodeDelegate();
 
@@ -11,8 +11,9 @@
          * the logic must be passed in in the form of 
          * a delegate. As the signature states, the action
          * needs to return a NodeStates enum */
-        public ActionNode(ActionNodeDelegate action) {
+        public TaskNode(ActionNodeDelegate action, string nodeName = "<node>") {
             m_action = action;
+            this.nodeName = nodeName;
         }
 
         /* Evaluates the node using the passed in delegate and 

@@ -49,6 +49,7 @@ namespace Lord.Core {
             foreach (Character character in assignedCharacters) {
                 character.currentSelect = null;
             }
+            // remove navmesh obstocle
             Destroy(this.gameObject);
         }
 
@@ -65,20 +66,6 @@ namespace Lord.Core {
                 // AssignCharacter(selector.GetComponent<Character>());
             }
         }
-        // public void Select(GameObject selector, int option = 0) {
-        //     if (option == 1) {
-        //         PlayerController _playerController = selector.GetComponent<PlayerController>();
-        //         if (_playerController != null) {
-        //             AssignCharacter(_playerController.character);
-        //         } else if (selector.GetComponent<Character>() != null) {
-        //             AssignCharacter(selector.GetComponent<Character>());
-        //         }
-        //     }
-        // }
-
-        // public void Deselect(GameObject selector) {
-        // UnassignCharacter(selector.GetComponent<PlayerController>().character);
-        // }
         protected override void Deselect(GameObject selector) {
             UnassignCharacter(selector.GetComponent<PlayerController>().character);
         }

@@ -8,11 +8,16 @@ namespace Lord.Core {
         protected override void Start() {
             base.Start();
         }
-        protected override void Select1(GameObject selector, int option = 0) {
-            if (selector.GetComponent<PlayerController>()) {
+        // protected override void Select1(GameObject selector, int option = 0) {
+        //     PlayerController playerController = selector.GetComponent<PlayerController>();
+        //     if (playerController != null) {
+        //         ItemBT itemBT = new ItemBT(playerController.character, this);
+        //         playerController.character.behaviorTree.SetNode(itemBT.PickupSequence());
+        //     }
+        //     if (selector.GetComponent<PlayerController>()) {
 
-            }
-            Destroy(this.gameObject);
-        }
+        //     }
+        //     Destroy(this.gameObject);
+        // }
     }
 }

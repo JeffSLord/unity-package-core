@@ -18,4 +18,4 @@ MonoBehaviour:
     type: 3}
   totalResources: 5
   totalWork: 5
-  harvestDistance: 1
+  harvestDistance: 2

@@ -33,6 +33,9 @@ namespace Lord.Core {
                 if (Input.GetMouseButtonDown(1)) {
                     Select1();
                 }
+                if (Input.GetMouseButton(1)) {
+                    Select1();
+                }
             }
         }
         // shouldn't affect current character?
@@ -59,11 +62,8 @@ namespace Lord.Core {
                     _hitSelectable.Select1(this.gameObject, 1);
                     character.currentSelect = _hitSelectable;
                 } else {
-                    MoveBT moveContext = new MoveBT(character.navMeshAgent, playerRaycast.hitLocation);
-                    character.GetComponent<BehaviorTree>().SetNode(new ActionNode(moveContext.MoveToPoint));
-                    // WorkBT workBT = new WorkBT()
-                    // character.navMeshAgent.destination = playerRaycast.hitLocation;
-                    // character.navMeshAgent.stoppingDistance = 1.0f;
+                    MoveBT moveContext = new MoveBT(character, playerRaycast.hitLocation, 1.0f);
+                    character.behaviorTree.SetNode(moveContext.MoveSequence());
                 }
             }
         }
