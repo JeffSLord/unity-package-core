@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lord.Core {
-    public class ResourceSource : WorldObjectSelect {
+    public class ResourceSource : WorldObject {
         // public Resource resource;
         public float resourcesLeft;
         // public float resourcesHarvested;
@@ -38,7 +38,7 @@ namespace Lord.Core {
         public void UnassignCharacter(Character character) {
             if (assignedCharacters.Contains(character)) {
                 assignedCharacters.Remove(character);
-                character.currentSelect = null;
+                character.currentSelection = null;
             }
             if (assignedCharacters.Count == 0) {
                 harvestRunning = false;
@@ -47,7 +47,7 @@ namespace Lord.Core {
         }
         private void ResourceDepleted() {
             foreach (Character character in assignedCharacters) {
-                character.currentSelect = null;
+                character.currentSelection = null;
             }
             // remove navmesh obstocle
             Destroy(this.gameObject);
@@ -66,7 +66,7 @@ namespace Lord.Core {
                 // AssignCharacter(selector.GetComponent<Character>());
             }
         }
-        protected override void Deselect(GameObject selector) {
+        protected override void Deselect(GameObject selector, int option = 0) {
             UnassignCharacter(selector.GetComponent<PlayerController>().character);
         }
 

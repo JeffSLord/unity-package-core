@@ -2,17 +2,17 @@ using System.Collections;
 using UnityEngine;
 
 namespace Lord.Core {
-    [RequireComponent(typeof(Lord.Core.PlayerRaycast))]
+    [RequireComponent(typeof(Lord.Core.MouseScan))]
     [RequireComponent(typeof(Lord.Core.BuilderController))]
     public class PlayerController : MonoBehaviour {
-        private PlayerRaycast playerRaycast;
+        private MouseScan playerRaycast;
         private BuilderController builderController;
-        private FloatController floatController;
+        private CamFloatController floatController;
         public Character character;
         private void Start() {
-            playerRaycast = GetComponent<PlayerRaycast>();
+            playerRaycast = GetComponent<MouseScan>();
             builderController = GetComponent<BuilderController>();
-            floatController = GetComponentInChildren<FloatController>();
+            floatController = GetComponentInChildren<CamFloatController>();
 
             builderController.enabled = false;
         }
@@ -53,14 +53,14 @@ namespace Lord.Core {
             GameObject _hitObject = playerRaycast.hitObject;
             if (playerRaycast.hitObject != null) {
                 // if currently selecting something (doing something), stop
-                if (character.currentSelect != null) {
-                    character.currentSelect.Deselect(this.gameObject);
-                    character.currentSelect = null;
+                if (character.currentSelection != null) {
+                    character.currentSelection.Deselect(this.gameObject);
+                    character.currentSelection = null;
                 }
                 Selectable _hitSelectable = _hitObject.GetComponentInParent<Selectable>();
                 if (_hitSelectable != null) {
                     _hitSelectable.Select1(this.gameObject, 1);
-                    character.currentSelect = _hitSelectable;
+                    character.currentSelection = _hitSelectable;
                 } else {
                     MoveBT moveContext = new MoveBT(character, playerRaycast.hitLocation, 1.0f);
                     character.behaviorTree.SetNode(moveContext.MoveSequence());

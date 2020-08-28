@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Lord.Core {
 
     [RequireComponent(typeof(Camera))]
-    public class FloatController : MonoBehaviour {
+    public class CamFloatController : MonoBehaviour {
 
         public Camera floatCam;
         public float moveSpeed = 10.0f;

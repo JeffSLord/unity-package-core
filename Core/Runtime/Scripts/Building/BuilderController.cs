@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lord.Core {
-    [RequireComponent(typeof(Lord.Core.PlayerRaycast))]
+    [RequireComponent(typeof(Lord.Core.MouseScan))]
     public class BuilderController : MonoBehaviour {
         public GameObject buildRoot;
-        private PlayerRaycast playerRaycast;
+        private MouseScan playerRaycast;
         public bool debug = true;
         public GameObject debugCubePrefab;
         public GameObject debugBuildObject;
@@ -23,7 +23,7 @@ namespace Lord.Core {
 
         // Start is called before the first frame update
         void Start() {
-            playerRaycast = GetComponent<PlayerRaycast>();
+            playerRaycast = GetComponent<MouseScan>();
             buildRotation = 0;
             deleteMode = false;
         }

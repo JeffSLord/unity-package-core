@@ -42,11 +42,25 @@ namespace Lord.Core {
         public Sequence MoveSequence() {
             return new Sequence(new List<Node> {
                 SetDestinationNode(),
-                CheckDestinationReachedNode()
+                CheckDestinationReachedNode(),
+                TurnNode()
             });
         }
+        // private NodeStates Turn() {
+        //     this.character.transform.LookAt(targetPosition);
+        //     return NodeStates.SUCCESS;
+        // }
         private NodeStates Turn() {
-            this.character.transform.LookAt(targetPosition);
+            // Vector3 vectorToTarget = targetPosition - character.transform.position;
+            // Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, 90) * vectorToTarget;
+            // Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, rotatedVectorToTarget);
+            // character.transform.rotation = Quaternion.RotateTowards(character.transform.rotation, targetRotation, 360);
+            // character.transform.Translate(Vector3.right, Space.Self);
+
+            // this.character.transform.LookAt(targetPosition, Vector3.forward);
+            Vector3 _target = new Vector3(targetPosition.x, targetPosition.y, 0);
+            character.transform.LookAt(_target, Vector3.up);
+            // character.transform.eulerAngles = new Vector3(0, 0, character.transform.eulerAngles.z);
             return NodeStates.SUCCESS;
         }
         public TaskNode TurnNode() {

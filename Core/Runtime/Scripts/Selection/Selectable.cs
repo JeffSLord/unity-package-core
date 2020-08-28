@@ -5,10 +5,9 @@ using UnityEngine;
 public class Selectable : MonoBehaviour {
 
     public delegate void SelectDelegate(GameObject selector, int option = 0);
-    public delegate void DeselectDelegate(GameObject selector);
     public SelectDelegate select0Delegate;
     public SelectDelegate select1Delegate;
-    public DeselectDelegate deselectDelegate;
+    public SelectDelegate deselectDelegate;
 
     public void Select0(GameObject selector, int option = 0) {
         select0Delegate(selector, option);
@@ -16,7 +15,7 @@ public class Selectable : MonoBehaviour {
     public void Select1(GameObject selector, int option = 0) {
         select1Delegate(selector, option);
     }
-    public void Deselect(GameObject selector) {
-        deselectDelegate(selector);
+    public void Deselect(GameObject selector, int option = 0) {
+        deselectDelegate(selector, option);
     }
 }

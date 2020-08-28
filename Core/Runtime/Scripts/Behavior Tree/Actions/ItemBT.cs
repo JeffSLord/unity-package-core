@@ -35,7 +35,6 @@ namespace Lord.Core {
         }
 
         private NodeStates FindNearbyItems() {
-            RaycastHit[] _raycastHist;
             Collider[] _colliders = Physics.OverlapSphere(character.transform.position, this.searchRadius);
             List<Item> _items = new List<Item>();
             foreach (Collider _col in _colliders) {

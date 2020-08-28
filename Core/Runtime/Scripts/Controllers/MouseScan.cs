@@ -2,22 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Lord.Core {
-    public class PlayerRaycast : MonoBehaviour {
+    public class MouseScan : MonoBehaviour {
         public Camera cam;
+        public bool tileMode;
         public bool debug = true;
-        // public GameObject debugCubePrefab;
-        // private GameObject debugCube;
         public Ray ray;
         private RaycastHit hit;
-        public GameObject hitObject;
         public Vector3 hitLocation;
         public Vector3 hitLocationRound;
-        public Vector3Int buildLocation;
-        public float interactionDistance = 10.0f;
+        public GameObject hitObject;
+        public float interactionDistance = 100.0f;
+        public Tilemap tilemap;
+        public Vector3 tilePosition;
+        public Tile tile;
 
-        // Update is called once per frame
         void Update() {
             ProcessRaycast();
         }
@@ -27,7 +28,6 @@ namespace Lord.Core {
                 hitObject = hit.collider.gameObject;
                 hitLocation = hit.point;
                 hitLocationRound = RoundHit(hitLocation);
-                // buildLocation = BuildLocation(hitLocationRound);
 
             } else {
                 hitObject = null;
@@ -37,6 +37,11 @@ namespace Lord.Core {
                 if (hitObject != null) {
                     Debug.Log(hitObject);
                 }
+            }
+            if (tileMode) {
+                tilePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+                tilePosition.z = 0;
+                tilemap.GetTile(tilemap.WorldToCell(tilePosition));
             }
         }
         private int MyRound(float val) {

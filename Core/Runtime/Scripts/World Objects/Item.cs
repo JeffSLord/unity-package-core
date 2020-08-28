@@ -6,7 +6,7 @@ namespace Lord.Core {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Selectable))]
     // [RequireComponent(typeof(Pickupable))]
-    public class Item : WorldObjectSelect {
+    public class Item : WorldObject {
         protected override void Start() {
             base.Start();
         }
