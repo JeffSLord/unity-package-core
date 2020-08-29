@@ -9,14 +9,13 @@ namespace Lord.Core {
         public delegate NodeStates NodeReturn();
 
         /* The current state of the node */
-        protected NodeStates m_nodeState;
-        protected bool initialized;
+        public NodeStates nodeState;
         /* Node name here */
         public string nodeName;
 
-        public NodeStates nodeState {
-            get { return m_nodeState; }
-        }
+        // public NodeStates nodeState {
+        //     get { return nodeState; }
+        // }
 
         /* The constructor for the node */
         public Node() { }

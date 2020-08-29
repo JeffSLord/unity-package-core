@@ -13,6 +13,7 @@ namespace Lord.Core {
         public Animator animator;
         public Selectable currentSelection;
         public BehaviorTree behaviorTree;
+        public float fov;
         protected override void Start() {
             base.Start();
             navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();

@@ -21,17 +21,17 @@
         public override NodeStates Evaluate() {
             switch (m_action()) {
                 case NodeStates.SUCCESS:
-                    m_nodeState = NodeStates.SUCCESS;
-                    return m_nodeState;
+                    nodeState = NodeStates.SUCCESS;
+                    return nodeState;
                 case NodeStates.FAILURE:
-                    m_nodeState = NodeStates.FAILURE;
-                    return m_nodeState;
+                    nodeState = NodeStates.FAILURE;
+                    return nodeState;
                 case NodeStates.RUNNING:
-                    m_nodeState = NodeStates.RUNNING;
-                    return m_nodeState;
+                    nodeState = NodeStates.RUNNING;
+                    return nodeState;
                 default:
-                    m_nodeState = NodeStates.FAILURE;
-                    return m_nodeState;
+                    nodeState = NodeStates.FAILURE;
+                    return nodeState;
             }
         }
 

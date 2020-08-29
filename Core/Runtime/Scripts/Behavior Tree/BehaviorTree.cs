@@ -5,40 +5,65 @@ using UnityEngine;
 namespace Lord.Core {
 
     public class BehaviorTree : MonoBehaviour {
+        public float tickRate = 0.25f;
         public Node currentNode;
         public NodeStates currentNodeState;
-        public bool running;
+        public bool isRunning;
+
+        public Node highPriorityNode;
+        public NodeStates highPriorityState;
+        public Node lowPriorityNode;
+        public NodeStates lowPriorityState;
+        public Node manualPriorityNode;
+        public bool isLowRunning;
+        public bool isMnaualRunning;
 
         public void SetNode(Node node) {
             if (currentNode != null) {
                 StopAllCoroutines();
-                running = false;
+                isRunning = false;
             }
             currentNode = node;
             if (currentNode != null) {
-                running = true;
+                isRunning = true;
                 StartCoroutine(Execute());
             }
         }
 
         private IEnumerator Execute() {
-            Debug.Log("BT Tick");
-            while (running) {
-                currentNodeState = currentNode.Evaluate();
-                switch (currentNodeState) {
-                    case NodeStates.RUNNING:
-                        break;
+            while (true) {
+                Debug.Log("BT Tick");
+                highPriorityState = highPriorityNode.Evaluate();
+                switch (highPriorityState) {
                     case NodeStates.SUCCESS:
-                        SetNode(null);
                         break;
                     case NodeStates.FAILURE:
-                        SetNode(null);
+                        isLowRunning = false;
                         break;
                     default:
-                        SetNode(null);
                         break;
                 }
-                yield return new WaitForSeconds(0.25f);
+
+                // while (isLowRunning) {
+                if (isLowRunning) {
+                    lowPriorityState = currentNode.Evaluate();
+                    switch (lowPriorityState) {
+                        case NodeStates.RUNNING:
+                            break;
+                        case NodeStates.SUCCESS:
+                            SetNode(null);
+                            break;
+                        case NodeStates.FAILURE:
+                            SetNode(null);
+                            break;
+                        default:
+                            SetNode(null);
+                            break;
+                    }
+                }
+
+                yield return new WaitForSeconds(tickRate);
+                // }
             }
         }
 
