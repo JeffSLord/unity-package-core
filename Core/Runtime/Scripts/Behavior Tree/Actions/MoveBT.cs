@@ -19,45 +19,77 @@ namespace Lord.Core {
         //     character.animator.SetBool("IsMoving", true);
         // }
 
-        private static NodeStates SetDestination(BehaviorContext context) {
-            context.navMeshAgent.destination = context.targetPosition;
-            context.navMeshAgent.stoppingDistance = context.stoppingDistance;
-            return NodeStates.SUCCESS;
-        }
-        public static Node SetDestinationNode() {
-            return new TaskContextNode(SetDestination, "Set Destination");
-        }
-        private static NodeStates CheckDestinationReached(BehaviorContext context) {
-            if (Vector3.Distance(navMeshAgent.transform.position, targetPosition) <= stoppingDistance + 0.05) {
-                character.animator.SetBool("IsMoving", false);
+        private static NodeStates SetDestination(Dictionary<string, object> context) {
+            Vector3 _targetPosition;
+            if (context.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
+                NavMeshAgent _navMeshAgent;
+                if (context.TryGetValue<NavMeshAgent>("navMeshAgent", out _navMeshAgent)) {
+                    _navMeshAgent.destination = _targetPosition;
+                    float _stoppingDistance;
+                    if (context.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
+                        _navMeshAgent.stoppingDistance = _stoppingDistance;
+                    }
+                }
+                // context.navMeshAgent.destination = context.targetPosition;
+                // context.navMeshAgent.stoppingDistance = context.stoppingDistance;
                 return NodeStates.SUCCESS;
             } else {
-                return NodeStates.RUNNING;
+                return NodeStates.FAILURE;
             }
+
         }
-        public static Node CheckDestinationReachedNode() {
-            return new TaskContextNode(CheckDestinationReached, "Check Destination Reached");
+        public static Node SetDestinationNode(Dictionary<string, object> context) {
+            return new TaskContextNode(SetDestination, context, "Set Destination");
+        }
+        private static NodeStates CheckDestinationReached(Dictionary<string, object> context) {
+            NavMeshAgent _navMeshAgent;
+            float _stoppingDistance;
+            Vector3 _targetPosition;
+            Character _character;
+            if (context.TryGetValue<NavMeshAgent>("navMeshAgent", out _navMeshAgent)) {
+                if (context.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
+                    if (context.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
+                        if (Vector3.Distance(_navMeshAgent.transform.position, _targetPosition) <= _stoppingDistance + 0.05) {
+                            if (context.TryGetValue<Character>("character", out _character)) {
+                                _character.animator.SetBool("IsMoving", false);
+                                return NodeStates.SUCCESS;
+                            }
+                        }
+                    }
+                }
+            }
+            return NodeStates.FAILURE;
+        }
+        public static Node CheckDestinationReachedNode(Dictionary<string, object> context) {
+            return new TaskContextNode(CheckDestinationReached, context, "Check Destination Reached");
         }
 
-        public static Node MoveSequence() {
+        public static Node MoveSequence(Dictionary<string, object> context) {
             return new Sequence(new List<Node> {
-                SetDestinationNode(),
-                CheckDestinationReachedNode(),
-                TurnNode()
+                SetDestinationNode(context),
+                CheckDestinationReachedNode(context),
+                TurnNode(context)
             });
         }
         // private NodeStates Turn() {
         //     this.character.transform.LookAt(targetPosition);
         //     return NodeStates.SUCCESS;
         // }
-        private static NodeStates Turn(BehaviorContext context) {
-            Vector3 _targetDir = targetPosition - character.transform.position;
-            float _angle = Mathf.Atan2(_targetDir.y, _targetDir.x) * Mathf.Rad2Deg;
-            character.transform.rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
-            return NodeStates.SUCCESS;
+        private static NodeStates Turn(Dictionary<string, object> context) {
+            Vector3 _targetPosition;
+            Character _character;
+            if (context.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
+                if (context.TryGetValue<Character>("character", out _character)) {
+                    Vector3 _targetDir = _targetPosition - _character.transform.position;
+                    float _angle = Mathf.Atan2(_targetDir.y, _targetDir.x) * Mathf.Rad2Deg;
+                    _character.transform.rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
+                    return NodeStates.SUCCESS;
+                }
+            }
+            return NodeStates.FAILURE;
         }
-        public static Node TurnNode() {
-            return new TaskContextNode(Turn, "Turn");
+        public static Node TurnNode(Dictionary<string, object> context) {
+            return new TaskContextNode(Turn, context, "Turn");
         }
     }
 }

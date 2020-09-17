@@ -15,11 +15,19 @@ namespace Lord.Core {
                 Character2D _char = _col.character;
                 Debug.Log(_char.gameObject.name);
                 if (_char.IsEnemy(character)) {
-                    character.bt.context.enemiesInRange.Add(_char);
-                    character.bt.context.enemiesDetected.Add(_char);
-                    character.bt.context.isEnemyVisible = true;
+                    List<Character> _enemiesInRange;
+                    if (character.bt.contextDict.TryGetValue<List<Character>>("enemiesInRange", out _enemiesInRange)) {
+                        _enemiesInRange.Add(_char);
+                    } else {
+                        character.bt.SetContext("enemiesInRange", _enemiesInRange);
+                        _enemiesInRange.Add(_char);
+                    }
+                    // character.bt.context.enemiesInRange.Add(_char);
+                    // character.bt.context.enemiesDetected.Add(_char);
+                    character.bt.SetContext("isEnemyVisible", true);
+                    // character.bt.context.isEnemyVisible = true;
                 } else {
-                    character.bt.context.friendliesInRange.Add(_char);
+                    // character.bt.context.friendliesInRange.Add(_char);
                 }
                 // if character is bad, add to enemies
                 // if (Vector3.Distance (transform.position, player.position) < sightReach && Vector3.Angle (target.position - transform.position, transform.forward) <= fov)
@@ -31,11 +39,16 @@ namespace Lord.Core {
             if (_col != null) {
                 Character2D _char = _col.character;
                 if (_char.IsEnemy(character)) {
-                    character.bt.context.enemiesInRange.Remove(_char);
-                    character.bt.context.enemiesDetected.Remove(_char);
-                    character.bt.context.isEnemyVisible = true;
+                    List<Character> _enemiesInRange;
+                    if (character.bt.contextDict.TryGetValue<List<Character>>("enemiesInRange", out _enemiesInRange)) {
+                        _enemiesInRange.Remove(_char);
+                    }
+                    // character.bt.context.enemiesInRange.Remove(_char);
+                    // character.bt.context.enemiesDetected.Remove(_char);
+                    character.bt.SetContext("isEnemyVisible", false);
+                    // character.bt.context.isEnemyVisible = true;
                 } else {
-                    character.bt.context.friendliesInRange.Remove(_char);
+                    // character.bt.context.friendliesInRange.Remove(_char);
                 }
                 // if character is bad, add to enemies
                 // if (Vector3.Distance (transform.position, player.position) < sightReach && Vector3.Angle (target.position - transform.position, transform.forward) <= fov)

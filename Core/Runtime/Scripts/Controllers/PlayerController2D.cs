@@ -52,12 +52,16 @@ namespace Lord.Core {
                             _hitSelectable.Select1(this.gameObject, 1);
                             character.currentSelection = _hitSelectable;
                         } else { // if clicked thing is not selectable
-                            MoveBT moveContext = new MoveBT(character, mouseScan.mousePosition, 1.0f);
-                            character.bt.SetManualNode(moveContext.MoveSequence());
+                            // MoveBT moveContext = new MoveBT(character, mouseScan.mousePosition, 1.0f);
+                            character.bt.SetContext("targetPosition", mouseScan.mousePosition);
+                            character.bt.SetContext("stoppingDistance", 1.0f);
+                            character.bt.SetManualNode(MoveBT.MoveSequence(character.bt.contextDict));
                         }
                     } else { // if mouse click did not hit object
-                        MoveBT moveContext = new MoveBT(character, mouseScan.mousePosition, 1.0f);
-                        character.bt.SetManualNode(moveContext.MoveSequence());
+                        // MoveBT moveContext = new MoveBT(character, mouseScan.mousePosition, 1.0f);
+                        character.bt.SetContext("targetPosition", mouseScan.mousePosition);
+                        character.bt.SetContext("stoppingDistance", 1.0f);
+                        character.bt.SetManualNode(MoveBT.MoveSequence(character.bt.contextDict));
                     }
                     break;
                 default:

@@ -14,8 +14,10 @@ namespace Lord.Core {
             PlayerController playerController = selector.GetComponent<PlayerController>();
             if (playerController != null) {
                 Debug.Log("Starting pickup...");
-                ItemBT itemBT = new ItemBT(playerController.character, this);
-                playerController.character.bt.SetManualNode(itemBT.PickupSequence());
+                // ItemBT itemBT = new ItemBT(playerController.character, this);
+                BehaviorTree _bt = playerController.character.bt;
+                _bt.SetContext("item", this);
+                _bt.SetManualNode(ItemBT.PickupSequence(_bt.contextDict));
             }
         }
     }

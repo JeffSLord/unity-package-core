@@ -6,7 +6,7 @@ namespace Lord.Core {
     [RequireComponent(typeof(Character2D))]
     public class BehaviorTree : MonoBehaviour {
         // context
-        public BehaviorContext context;
+        // public BehaviorContext context;
         public Dictionary<string, object> contextDict;
         // how often to execute node
         public float tickRate = 0.25f;
@@ -24,12 +24,17 @@ namespace Lord.Core {
         public bool isMinorRunning;
 
         void Start() {
-            this.context = new BehaviorContext(this.GetComponent<Character>());
+            // this.context = new BehaviorContext(this.GetComponent<Character>());
             this.contextDict = new Dictionary<string, object>();
             this.isUrgentRunning = true;
             this.isMinorRunning = true;
             // this.urgentNode = 
             StartCoroutine(Execute());
+        }
+
+        public object SetContext(string name, object obj) {
+            contextDict[name] = obj;
+            return contextDict[name];
         }
 
         public void SetManualNode(Node node) {

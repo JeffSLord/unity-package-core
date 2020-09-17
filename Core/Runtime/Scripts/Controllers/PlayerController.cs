@@ -62,8 +62,10 @@ namespace Lord.Core {
                     _hitSelectable.Select1(this.gameObject, 1);
                     character.currentSelection = _hitSelectable;
                 } else {
-                    MoveBT moveContext = new MoveBT(character, playerRaycast.hitLocation, 1.0f);
-                    character.bt.SetManualNode(moveContext.MoveSequence());
+                    // MoveBT moveContext = new MoveBT(character, playerRaycast.hitLocation, 1.0f);
+                    character.bt.SetContext("targetPosition", playerRaycast.hitLocation);
+                    character.bt.SetContext("stoppingDistance", 1.0f);
+                    character.bt.SetManualNode(MoveBT.MoveSequence(character.bt.contextDict));
                 }
             }
         }
