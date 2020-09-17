@@ -5,16 +5,16 @@ using UnityEngine.AI;
 
 namespace Lord.Core {
 
-    public class WorkBT : MoveBT {
-        public GameObject workObject;
-        public Vector3 workPosition;
-        public WorkBT(Character character, GameObject workObject, Vector3 workPosition):
-            base(character, workPosition) {
-                this.workObject = workObject;
-                this.workPosition = workPosition;
-            }
+    public static class WorkBT {
+        // public GameObject workObject;
+        // public Vector3 workPosition;
+        // public WorkBT(Character character, GameObject workObject, Vector3 workPosition):
+        //     base(character, workPosition) {
+        //         this.workObject = workObject;
+        //         this.workPosition = workPosition;
+        //     }
 
-        private NodeStates WorkResourceSource() {
+        private static NodeStates WorkResourceSource(BehaviorContext context) {
             if (workObject != null) {
                 ResourceSource _resourceSource = workObject.GetComponent<ResourceSource>();
                 _resourceSource.AssignCharacter(character);
@@ -24,15 +24,15 @@ namespace Lord.Core {
                 return NodeStates.SUCCESS;
             }
         }
-        public TaskNode WorkResourceSourceNode() {
-            return new TaskNode(WorkResourceSource, "Work Resource Source");
+        public static Node WorkResourceSourceNode() {
+            return new TaskContextNode(WorkResourceSource, "Work Resource Source");
         }
-        private NodeStates WorkResourceSourceAnim() {
+        private static NodeStates WorkResourceSourceAnim(BehaviorContext context) {
             this.character.animator.Play("Attack", 0);
             return NodeStates.SUCCESS;
         }
-        public TaskNode WorkResourceSourceAnimNode() {
-            return new TaskNode(WorkResourceSourceAnim, "Animation");
+        public static Node WorkResourceSourceAnimNode() {
+            return new TaskContextNode(WorkResourceSourceAnim, "Animation");
         }
         // private NodeStates WorkResourceSourceFinish() {
         //     if (workObject)
@@ -42,7 +42,7 @@ namespace Lord.Core {
         // public TaskNode WorkResourceSourceFinishNode() {
         //     return new TaskNode(WorkResourceSourceFinishNode, "Work Finsished");
         // }
-        public Sequence WorkResourceSourceSequence() {
+        public static Node WorkResourceSourceSequence() {
             ResourceSource _resourceSource = workObject.GetComponent<ResourceSource>();
             WOD_ResourceSource _wod = (WOD_ResourceSource) _resourceSource.worldObjectData;
             this.stoppingDistance = _wod.harvestDistance;

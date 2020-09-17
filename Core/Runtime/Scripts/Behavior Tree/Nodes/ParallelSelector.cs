@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lord.Core {
-    public class ParallelSelector : Node {
+    public class Selector : Node {
         /** The child nodes for this selector */
         protected List<Node> nodeList = new List<Node>();
 
         /** The constructor requires a list of child nodes to be 
          * passed in*/
-        public ParallelSelector(List<Node> nodes) {
+        public Selector(List<Node> nodes) {
             this.nodeList = nodes;
         }
 

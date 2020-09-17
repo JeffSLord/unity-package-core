@@ -39,23 +39,25 @@ namespace Lord.Core {
                     break;
                 case 1: // right click
                     _hitObject = mouseScan.hitGameObject;
+                    // if mouse click hit object
                     if (_hitObject != null) {
-                        // if currently selecting something (doing something), stop
+                        // if currently selecting something (doing something), stop doing it
                         if (character.currentSelection != null) {
                             character.currentSelection.Deselect(this.gameObject);
                             character.currentSelection = null;
                         }
+                        // if clicked thing is selectable
                         Selectable _hitSelectable = _hitObject.GetComponentInParent<Selectable>();
                         if (_hitSelectable != null) {
                             _hitSelectable.Select1(this.gameObject, 1);
                             character.currentSelection = _hitSelectable;
-                        } else {
+                        } else { // if clicked thing is not selectable
                             MoveBT moveContext = new MoveBT(character, mouseScan.mousePosition, 1.0f);
-                            character.behaviorTree.SetNode(moveContext.MoveSequence());
+                            character.bt.SetManualNode(moveContext.MoveSequence());
                         }
-                    } else {
+                    } else { // if mouse click did not hit object
                         MoveBT moveContext = new MoveBT(character, mouseScan.mousePosition, 1.0f);
-                        character.behaviorTree.SetNode(moveContext.MoveSequence());
+                        character.bt.SetManualNode(moveContext.MoveSequence());
                     }
                     break;
                 default:

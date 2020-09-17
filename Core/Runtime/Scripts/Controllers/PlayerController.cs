@@ -63,7 +63,7 @@ namespace Lord.Core {
                     character.currentSelection = _hitSelectable;
                 } else {
                     MoveBT moveContext = new MoveBT(character, playerRaycast.hitLocation, 1.0f);
-                    character.behaviorTree.SetNode(moveContext.MoveSequence());
+                    character.bt.SetManualNode(moveContext.MoveSequence());
                 }
             }
         }
