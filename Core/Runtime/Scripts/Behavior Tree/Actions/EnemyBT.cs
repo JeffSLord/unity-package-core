@@ -33,16 +33,16 @@ namespace Lord.Core {
             return new TaskContextNode(IsAlertedOfEnemy, context, "Check Enemies Alert");
         }
         public static Node IsEnemyDetectedNode(Dictionary<string, object> context) {
-            return new ParallelSequence(new List<Node> {
+            return new SelectorPar(new List<Node> {
                 EnemyBT.IsEnemyVisibleNode(context),
                 EnemyBT.IsAlertedOfEnemyNode(context)
             });
         }
         public static Node EnemyDetectionNode(Dictionary<string, object> context) {
             // MoveBT _moveBT = new MoveBT(context.character, new Vector3(0, 0, 0));
-            return new Sequence(new List<Node> {
+            return new SequenceSeq(new List<Node> {
                 EnemyBT.IsEnemyDetectedNode(context),
-
+                MoveBT.FollowTransform(context)
             });
         }
     }

@@ -29,7 +29,7 @@ namespace Lord.Core {
         public void SetCharacterDestination(Vector3 position, float stoppingDistance) {
             bt.SetContext("targetPosition", position);
             bt.SetContext("stoppingDistance", stoppingDistance);
-            bt.SetManualNode(MoveBT.MoveSequence(bt.contextDict));
+            bt.SetManualNode(MoveBT.MoveToPoint(bt.contextDict));
 
         }
     }

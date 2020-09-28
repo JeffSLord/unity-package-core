@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lord.Core {
-    public class ParallelSequence : Node {
+    public class SequencePar : Node {
         private List<Node> nodeList = new List<Node>();
-        public ParallelSequence(List<Node> nodes) {
+        public SequencePar(List<Node> nodes) {
             this.nodeList = nodes;
         }
 

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lord.Core {
-    public class Sequence : Node {
+    public class SequenceSeq : Node {
         /** Chiildren nodes that belong to this sequence */
         private List<Node> nodeList = new List<Node>();
         private int currentIndex;
         private int previousIndex;
         private int iterations;
         /** Must provide an initial set of children nodes to work */
-        public Sequence(List<Node> nodes) {
+        public SequenceSeq(List<Node> nodes) {
             this.nodeList = nodes;
             currentIndex = 0;
             previousIndex = 0;

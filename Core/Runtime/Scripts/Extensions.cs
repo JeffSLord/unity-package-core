@@ -10,7 +10,11 @@ namespace Lord.Core {
         public static bool TryGetValue<T>(this Dictionary<string, object> instance, string name, out T value) {
             object _val;
             bool _try = instance.TryGetValue(name, out _val);
-            value = (T) _val;
+            if (_try) {
+                value = (T) _val;
+            } else {
+                value = default(T);
+            }
             return _try;
         }
     }

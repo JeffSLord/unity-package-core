@@ -6,15 +6,18 @@ namespace Lord.Core {
     public class CharacterDetection2D : MonoBehaviour {
         public Character character;
         private void OnTriggerEnter2D(Collider2D other) {
-            Debug.Log("Collider: " + other.gameObject.name);
+            // Debug.Log("Collider: " + other.gameObject.name);
             CharacterCollider2D _col = other.gameObject.GetComponent<CharacterCollider2D>();
             if (_col != null) {
                 Character2D _char = _col.character;
                 List<Character> _charInRange = new List<Character> { _char };
-                Debug.Log(_char.gameObject.name);
+                // Debug.Log(_char.gameObject.name);
                 if (_char.IsEnemy(character)) { // Character is enemy
                     character.bt.SetContextList<Character>("enemiesInRange", _charInRange);
                     character.bt.SetContext<bool>("isEnemyVisible", true);
+
+                    character.bt.SetContext<Transform>("targetTransform", _char.transform);
+
                     Debug.Log("CHARACTER IS AN ENEMY");
 
                 } else { // Character is not enemy

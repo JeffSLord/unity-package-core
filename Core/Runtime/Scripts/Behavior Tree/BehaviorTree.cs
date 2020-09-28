@@ -25,22 +25,17 @@ namespace Lord.Core {
         public bool isMinorRunning;
 
         void Start() {
-            // this.context = new BehaviorContext(this.GetComponent<Character>());
             this.contextDict = new Dictionary<string, object>();
-            // this.SetContext("character", this.GetComponent<Character>());
             this.SetContext<Character>("character", this.GetComponent<Character>());
+            this.SetContext<float>("stoppingDistance", 1.0f);
+            this.urgentNode = EnemyBT.EnemyDetectionNode(contextDict);
             this.isUrgentRunning = true;
             this.isMinorRunning = true;
-            // this.urgentNode = 
             StartCoroutine(Execute());
         }
 
         public T SetContext<T>(string name, T obj) {
             contextDict[name] = obj;
-            // T _val;
-            // if (contextDict.TryGetValue<T>(name, out _val)) {
-            //     contextDict[name] = obj;
-            // }
             return (T) contextDict[name];
         }
         public List<T> SetContextList<T>(string name, List<T> obj) {
@@ -145,12 +140,9 @@ namespace Lord.Core {
                             break;
                     }
                 }
-
                 yield return new WaitForSeconds(tickRate);
-                // }
             }
         }
 
-        // private NodeStates 
     }
 }

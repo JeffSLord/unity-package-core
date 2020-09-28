@@ -6,19 +6,6 @@ using UnityEngine.AI;
 namespace Lord.Core {
 
     public static class MoveBT {
-        // public Vector3 targetPosition;
-        // public NavMeshAgent navMeshAgent;
-        // public Character character;
-        // public float stoppingDistance;
-
-        // public MoveBT(Character character, Vector3 position = new Vector3(), float stoppingDistance = 1.0f) {
-        //     this.navMeshAgent = character.navMeshAgent;
-        //     this.character = character;
-        //     this.targetPosition = position;
-        //     this.stoppingDistance = stoppingDistance;
-        //     character.animator.SetBool("IsMoving", true);
-        // }
-
         private static NodeStates SetDestination(Dictionary<string, object> context) {
             Character _character;
             float _stoppingDistance;
@@ -28,6 +15,7 @@ namespace Lord.Core {
                     if (context.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
                         _character.navMeshAgent.destination = _targetPosition;
                         _character.navMeshAgent.stoppingDistance = _stoppingDistance;
+                        // _character.transform.rotation = Quaternion.LookRotation(_character.navMeshAgent.desiredVelocity, Vector3.forward);
                         return NodeStates.SUCCESS;
                     }
                 }
@@ -58,13 +46,19 @@ namespace Lord.Core {
         public static Node CheckDestinationReachedNode(Dictionary<string, object> context) {
             return new TaskContextNode(CheckDestinationReached, context, "Check Destination Reached");
         }
-
-        public static Node MoveSequence(Dictionary<string, object> context) {
-            return new Sequence(new List<Node> {
-                SetDestinationNode(context),
-                CheckDestinationReachedNode(context),
-                TurnNode(context)
-            });
+        private static NodeStates SetTransformPosition(Dictionary<string, object> context) {
+            Character _character;
+            Transform _transform;
+            if (context.TryGetValue<Character>("character", out _character)) {
+                if (context.TryGetValue<Transform>("targetTransform", out _transform)) {
+                    _character.bt.SetContext<Vector3>("targetPosition", _transform.position);
+                    return NodeStates.SUCCESS;
+                }
+            }
+            return NodeStates.FAILURE;
+        }
+        public static Node SetTransformPositionNode(Dictionary<string, object> context) {
+            return new TaskContextNode(SetTransformPosition, context, "Set transform position");
         }
         private static NodeStates Turn(Dictionary<string, object> context) {
             Character _character;
@@ -82,5 +76,27 @@ namespace Lord.Core {
         public static Node TurnNode(Dictionary<string, object> context) {
             return new TaskContextNode(Turn, context, "Turn");
         }
+        public static Node MoveToPoint(Dictionary<string, object> context) {
+            return new SequenceSeq(new List<Node> {
+                SetDestinationNode(context),
+                CheckDestinationReachedNode(context),
+                TurnNode(context)
+            });
+        }
+        public static Node MoveToPointUpdate(Dictionary<string, object> context) {
+            return new SequencePar(new List<Node> {
+                SetDestinationNode(context),
+                CheckDestinationReachedNode(context),
+                TurnNode(context)
+            });
+        }
+
+        public static Node FollowTransform(Dictionary<string, object> context) {
+            return new SequencePar(new List<Node> {
+                SetTransformPositionNode(context),
+                MoveToPointUpdate(context)
+            });
+        }
+
     }
 }
