@@ -13,6 +13,13 @@ namespace Lord.Core {
         }
         void Update() {
             InputHandler();
+
+            // rotate towards mouse
+            Vector3 _dir = Input.mousePosition - mouseScan.cam.WorldToScreenPoint(character.transform.position);
+            float _angle = Mathf.Atan2(_dir.y, _dir.x) * Mathf.Rad2Deg;
+            // character.transform.rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
+            Quaternion _q = Quaternion.Euler(new Vector3(0, 0, _angle));
+            character.transform.rotation = Quaternion.RotateTowards(character.transform.rotation, _q, 400.0f * Time.deltaTime);
         }
         private void InputHandler() {
             if (Input.GetMouseButtonDown(0)) {
@@ -52,18 +59,10 @@ namespace Lord.Core {
                             _hitSelectable.Select1(this.gameObject, 1);
                             character.currentSelection = _hitSelectable;
                         } else { // if clicked thing is not selectable
-                            // MoveBT moveContext = new MoveBT(character, mouseScan.mousePosition, 1.0f);
                             character.SetCharacterDestination(mouseScan.mousePosition, 1.0f);
-                            // character.bt.SetContext("targetPosition", mouseScan.mousePosition);
-                            // character.bt.SetContext("stoppingDistance", 1.0f);
-                            // character.bt.SetManualNode(MoveBT.MoveSequence(character.bt.contextDict));
                         }
                     } else { // if mouse click did not hit object
-                        // MoveBT moveContext = new MoveBT(character, mouseScan.mousePosition, 1.0f);
                         character.SetCharacterDestination(mouseScan.mousePosition, 1.0f);
-                        // character.bt.SetContext("targetPosition", mouseScan.mousePosition);
-                        // character.bt.SetContext("stoppingDistance", 1.0f);
-                        // character.bt.SetManualNode(MoveBT.MoveSequence(character.bt.contextDict));
                     }
                     break;
                 default:
