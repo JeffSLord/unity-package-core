@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Lord.Core {
-    [RequireComponent(typeof(Character2D))]
+    // [RequireComponent(typeof(Character2D))]
     public class BehaviorTree : MonoBehaviour {
         // context
         // public BehaviorContext context;
@@ -26,15 +27,52 @@ namespace Lord.Core {
         void Start() {
             // this.context = new BehaviorContext(this.GetComponent<Character>());
             this.contextDict = new Dictionary<string, object>();
+            // this.SetContext("character", this.GetComponent<Character>());
+            this.SetContext<Character>("character", this.GetComponent<Character>());
             this.isUrgentRunning = true;
             this.isMinorRunning = true;
             // this.urgentNode = 
             StartCoroutine(Execute());
         }
 
-        public object SetContext(string name, object obj) {
+        public T SetContext<T>(string name, T obj) {
             contextDict[name] = obj;
-            return contextDict[name];
+            // T _val;
+            // if (contextDict.TryGetValue<T>(name, out _val)) {
+            //     contextDict[name] = obj;
+            // }
+            return (T) contextDict[name];
+        }
+        public List<T> SetContextList<T>(string name, List<T> obj) {
+            List<T> _val;
+            if (contextDict.TryGetValue<List<T>>(name, out _val)) {
+                contextDict[name] = ((List<T>) contextDict[name]).Union(obj).ToList();
+            } else {
+                SetContext<List<T>>(name, obj);
+            }
+            return (List<T>) contextDict[name];
+        }
+        public void RemoveContext<T>(string name) {
+            T _val;
+            if (contextDict.TryGetValue<T>(name, out _val)) {
+                contextDict.Remove(name);
+            }
+        }
+        // Return true if fully removed, false if list still has elements
+        public bool RemoveContextList<T>(string name, List<T> obj) {
+            T _val;
+            if (contextDict.TryGetValue<T>(name, out _val)) {
+                List<T> _l1 = ((List<T>) contextDict[name]).Except(obj).ToList();
+                if (_l1.Count > 0) {
+                    contextDict[name] = _l1;
+                    return false;
+                } else {
+                    RemoveContext<List<T>>(name);
+                    return true;
+                }
+            } else {
+                return true;
+            }
         }
 
         public void SetManualNode(Node node) {

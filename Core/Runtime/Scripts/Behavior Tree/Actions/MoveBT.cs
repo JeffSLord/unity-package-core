@@ -20,40 +20,35 @@ namespace Lord.Core {
         // }
 
         private static NodeStates SetDestination(Dictionary<string, object> context) {
+            Character _character;
+            float _stoppingDistance;
             Vector3 _targetPosition;
-            if (context.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
-                NavMeshAgent _navMeshAgent;
-                if (context.TryGetValue<NavMeshAgent>("navMeshAgent", out _navMeshAgent)) {
-                    _navMeshAgent.destination = _targetPosition;
-                    float _stoppingDistance;
+            if (context.TryGetValue<Character>("character", out _character)) {
+                if (context.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
                     if (context.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
-                        _navMeshAgent.stoppingDistance = _stoppingDistance;
+                        _character.navMeshAgent.destination = _targetPosition;
+                        _character.navMeshAgent.stoppingDistance = _stoppingDistance;
+                        return NodeStates.SUCCESS;
                     }
                 }
-                // context.navMeshAgent.destination = context.targetPosition;
-                // context.navMeshAgent.stoppingDistance = context.stoppingDistance;
-                return NodeStates.SUCCESS;
-            } else {
-                return NodeStates.FAILURE;
             }
-
+            return NodeStates.FAILURE;
         }
         public static Node SetDestinationNode(Dictionary<string, object> context) {
             return new TaskContextNode(SetDestination, context, "Set Destination");
         }
         private static NodeStates CheckDestinationReached(Dictionary<string, object> context) {
-            NavMeshAgent _navMeshAgent;
+            Character _character;
             float _stoppingDistance;
             Vector3 _targetPosition;
-            Character _character;
-            if (context.TryGetValue<NavMeshAgent>("navMeshAgent", out _navMeshAgent)) {
+            if (context.TryGetValue<Character>("character", out _character)) {
                 if (context.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
                     if (context.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
-                        if (Vector3.Distance(_navMeshAgent.transform.position, _targetPosition) <= _stoppingDistance + 0.05) {
-                            if (context.TryGetValue<Character>("character", out _character)) {
-                                _character.animator.SetBool("IsMoving", false);
-                                return NodeStates.SUCCESS;
-                            }
+                        if (Vector3.Distance(_character.navMeshAgent.transform.position, _targetPosition) <= _stoppingDistance + 0.05) {
+                            _character.animator.SetBool("IsMoving", false);
+                            return NodeStates.SUCCESS;
+                        } else {
+                            return NodeStates.RUNNING;
                         }
                     }
                 }
@@ -71,13 +66,9 @@ namespace Lord.Core {
                 TurnNode(context)
             });
         }
-        // private NodeStates Turn() {
-        //     this.character.transform.LookAt(targetPosition);
-        //     return NodeStates.SUCCESS;
-        // }
         private static NodeStates Turn(Dictionary<string, object> context) {
-            Vector3 _targetPosition;
             Character _character;
+            Vector3 _targetPosition;
             if (context.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
                 if (context.TryGetValue<Character>("character", out _character)) {
                     Vector3 _targetDir = _targetPosition - _character.transform.position;

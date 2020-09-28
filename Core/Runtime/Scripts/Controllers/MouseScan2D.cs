@@ -28,7 +28,8 @@ namespace Lord.Core {
             tilePosition = tilemap.WorldToCell(mousePosition);
             tile = tilemap.GetTile<Tile>(tilePosition);
 
-            RaycastHit2D _hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+            // ignore Layer 9
+            RaycastHit2D _hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, ~(1 << 9));
             if (_hit.collider != null) {
                 hitGameObject = _hit.collider.gameObject;
             } else {

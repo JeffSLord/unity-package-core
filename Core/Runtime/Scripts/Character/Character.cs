@@ -9,7 +9,7 @@ namespace Lord.Core {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BehaviorTree))]
     public class Character : WorldObject {
-        public UnityEngine.AI.NavMeshAgent navMeshAgent;
+        public NavMeshAgent navMeshAgent;
         public Animator animator;
         public Selectable currentSelection;
         public BehaviorTree bt;
@@ -18,12 +18,19 @@ namespace Lord.Core {
         public int faction;
         protected override void Start() {
             base.Start();
-            navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
             bt = GetComponent<BehaviorTree>();
         }
         protected override void Select0(GameObject selector, int option = 0) {
             Debug.Log("Actual override is working? can this work?");
+        }
+
+        public void SetCharacterDestination(Vector3 position, float stoppingDistance) {
+            bt.SetContext("targetPosition", position);
+            bt.SetContext("stoppingDistance", stoppingDistance);
+            bt.SetManualNode(MoveBT.MoveSequence(bt.contextDict));
+
         }
     }
 }
