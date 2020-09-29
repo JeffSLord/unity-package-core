@@ -50,7 +50,7 @@ namespace Lord.Core {
                 }
                 if (iterations >= 100) {
                     _runningIteration = false;
-                    Debug.LogError("INFINITE LOOP DETECTED");
+                    Debug.LogWarning("INFINITE LOOP POSSIBLY DETECTED");
                 }
                 iterations += 1;
             }

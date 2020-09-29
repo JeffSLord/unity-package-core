@@ -6,9 +6,8 @@ using UnityEngine;
 namespace Lord.Core {
     // [RequireComponent(typeof(Character2D))]
     public class BehaviorTree : MonoBehaviour {
-        // context
-        // public BehaviorContext context;
-        public Dictionary<string, object> contextDict;
+        public bool isGlobalRunning;
+        public Dictionary<string, object> context;
         // how often to execute node
         public float tickRate = 0.25f;
         // manual priority (player override)
@@ -24,42 +23,46 @@ namespace Lord.Core {
         public NodeStates minorState;
         public bool isMinorRunning;
 
+        void Awake() {
+            this.context = new Dictionary<string, object>();
+        }
         void Start() {
-            this.contextDict = new Dictionary<string, object>();
-            this.SetContext<Character>("character", this.GetComponent<Character>());
-            this.SetContext<float>("stoppingDistance", 1.0f);
-            this.urgentNode = EnemyBT.EnemyDetectionNode(contextDict);
-            this.isUrgentRunning = true;
-            this.isMinorRunning = true;
+            if (isGlobalRunning) {
+                RunBT();
+            }
+        }
+        public void RunBT() {
+            StopAllCoroutines();
             StartCoroutine(Execute());
+
         }
 
         public T SetContext<T>(string name, T obj) {
-            contextDict[name] = obj;
-            return (T) contextDict[name];
+            context[name] = obj;
+            return (T) context[name];
         }
         public List<T> SetContextList<T>(string name, List<T> obj) {
             List<T> _val;
-            if (contextDict.TryGetValue<List<T>>(name, out _val)) {
-                contextDict[name] = ((List<T>) contextDict[name]).Union(obj).ToList();
+            if (context.TryGetValue<List<T>>(name, out _val)) {
+                context[name] = ((List<T>) context[name]).Union(obj).ToList();
             } else {
                 SetContext<List<T>>(name, obj);
             }
-            return (List<T>) contextDict[name];
+            return (List<T>) context[name];
         }
         public void RemoveContext<T>(string name) {
             T _val;
-            if (contextDict.TryGetValue<T>(name, out _val)) {
-                contextDict.Remove(name);
+            if (context.TryGetValue<T>(name, out _val)) {
+                context.Remove(name);
             }
         }
         // Return true if fully removed, false if list still has elements
         public bool RemoveContextList<T>(string name, List<T> obj) {
-            T _val;
-            if (contextDict.TryGetValue<T>(name, out _val)) {
-                List<T> _l1 = ((List<T>) contextDict[name]).Except(obj).ToList();
+            List<T> _val;
+            if (context.TryGetValue<List<T>>(name, out _val)) {
+                List<T> _l1 = ((List<T>) context[name]).Except(obj).ToList();
                 if (_l1.Count > 0) {
-                    contextDict[name] = _l1;
+                    context[name] = _l1;
                     return false;
                 } else {
                     RemoveContext<List<T>>(name);
@@ -84,6 +87,9 @@ namespace Lord.Core {
 
         private IEnumerator Execute() {
             while (true) {
+                isUrgentRunning = true;
+                isMinorRunning = true;
+                isMnaualRunning = true;
                 Debug.Log("BT Tick");
                 // manual task
                 if (manualPriorityNode != null) {
@@ -110,7 +116,7 @@ namespace Lord.Core {
                     }
                 }
                 // high priority
-                if (isUrgentRunning && urgentNode != null) {
+                else if (isUrgentRunning && urgentNode != null) {
                     urgentState = urgentNode.Evaluate();
                     switch (urgentState) {
                         case NodeStates.SUCCESS:
@@ -127,7 +133,7 @@ namespace Lord.Core {
                     }
                 }
                 // low priority
-                if (isMinorRunning && minorNode != null) {
+                else if (isMinorRunning && minorNode != null) {
                     minorState = minorNode.Evaluate();
                     switch (minorState) {
                         case NodeStates.RUNNING:

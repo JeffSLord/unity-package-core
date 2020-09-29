@@ -10,13 +10,16 @@ namespace Lord.Core {
             Character _character;
             float _stoppingDistance;
             Vector3 _targetPosition;
+            float _moveSpeed;
             if (context.TryGetValue<Character>("character", out _character)) {
                 if (context.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
                     if (context.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
-                        _character.navMeshAgent.destination = _targetPosition;
-                        _character.navMeshAgent.stoppingDistance = _stoppingDistance;
-                        // _character.transform.rotation = Quaternion.LookRotation(_character.navMeshAgent.desiredVelocity, Vector3.forward);
-                        return NodeStates.SUCCESS;
+                        if (context.TryGetValue<float>("moveSpeed", out _moveSpeed)) {
+                            _character.navMeshAgent.destination = _targetPosition;
+                            _character.navMeshAgent.stoppingDistance = _stoppingDistance;
+                            _character.navMeshAgent.speed = _moveSpeed;
+                            return NodeStates.SUCCESS;
+                        }
                     }
                 }
             }

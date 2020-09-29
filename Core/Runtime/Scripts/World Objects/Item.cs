@@ -17,7 +17,7 @@ namespace Lord.Core {
                 // ItemBT itemBT = new ItemBT(playerController.character, this);
                 BehaviorTree _bt = playerController.character.bt;
                 _bt.SetContext("item", this);
-                _bt.SetManualNode(ItemBT.PickupSequence(_bt.contextDict));
+                _bt.SetManualNode(ItemBT.PickupSequence(_bt.context));
             }
         }
     }

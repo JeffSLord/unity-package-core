@@ -7,27 +7,22 @@ namespace Lord.Core {
     public class PlayerController2D : MonoBehaviour {
         public Character2D character;
         public MouseScan2D mouseScan;
+        public float followMouseSpeed;
 
         void Start() {
             mouseScan = GetComponent<MouseScan2D>();
         }
         void Update() {
             InputHandler();
-
-            // rotate towards mouse
-            Vector3 _dir = Input.mousePosition - mouseScan.cam.WorldToScreenPoint(character.transform.position);
-            float _angle = Mathf.Atan2(_dir.y, _dir.x) * Mathf.Rad2Deg;
-            // character.transform.rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
-            Quaternion _q = Quaternion.Euler(new Vector3(0, 0, _angle));
-            character.transform.rotation = Quaternion.RotateTowards(character.transform.rotation, _q, 400.0f * Time.deltaTime);
         }
+        void LateUpdate() {
+            this.transform.position = new Vector3(character.transform.position.x, character.transform.position.y, this.transform.position.z);
+        }
+
         private void InputHandler() {
             if (Input.GetMouseButtonDown(0)) {
                 MouseHandler(0);
             }
-            // if (Input.GetMouseButtonDown(1)) {
-            //     MouseHandler(1);
-            // }
             if (Input.GetMouseButton(1)) {
                 MouseHandler(1);
             }

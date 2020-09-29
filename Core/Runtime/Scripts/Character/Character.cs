@@ -13,14 +13,26 @@ namespace Lord.Core {
         public Animator animator;
         public Selectable currentSelection;
         public BehaviorTree bt;
+        public CharacterData characterData;
         public float fov;
         public float voiceRange;
         public int faction;
+
+        protected override void Awake() {
+
+        }
         protected override void Start() {
             base.Start();
             navMeshAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
             bt = GetComponent<BehaviorTree>();
+            SetBtContext();
+        }
+        protected void SetBtContext() {
+            bt.SetContext<Character>("character", this);
+            bt.SetContext<float>("moveSpeed", characterData.moveSpeed);
+            bt.SetContext<float>("stoppingDistance", characterData.stoppingDistance);
+            bt.urgentNode = EnemyBT.EnemyDetectionNode(bt.context);
         }
         protected override void Select0(GameObject selector, int option = 0) {
             Debug.Log("Actual override is working? can this work?");
@@ -29,7 +41,7 @@ namespace Lord.Core {
         public void SetCharacterDestination(Vector3 position, float stoppingDistance) {
             bt.SetContext("targetPosition", position);
             bt.SetContext("stoppingDistance", stoppingDistance);
-            bt.SetManualNode(MoveBT.MoveToPoint(bt.contextDict));
+            bt.SetManualNode(MoveBT.MoveToPoint(bt.context));
 
         }
     }

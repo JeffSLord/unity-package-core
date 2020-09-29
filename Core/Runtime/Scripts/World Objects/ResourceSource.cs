@@ -64,7 +64,7 @@ namespace Lord.Core {
                 // _playerController.character.bt.context.resourceSource = this;
                 BehaviorTree _bt = _playerController.character.bt;
                 _bt.SetContext("resourceSource", this);
-                _bt.SetManualNode(WorkBT.WorkResourceSourceSequence(_bt.contextDict));
+                _bt.SetManualNode(WorkBT.WorkResourceSourceSequence(_bt.context));
             } else if (selector.GetComponent<Character>() != null) {
                 // AssignCharacter(selector.GetComponent<Character>());
             }

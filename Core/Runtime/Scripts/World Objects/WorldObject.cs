@@ -7,6 +7,9 @@ namespace Lord.Core {
     public class WorldObject : MonoBehaviour {
         public WorldObjectData worldObjectData;
         private Selectable selectable;
+        protected virtual void Awake() {
+
+        }
         protected virtual void Start() {
             selectable = GetComponent<Selectable>();
             selectable.select0Delegate = Select0;
