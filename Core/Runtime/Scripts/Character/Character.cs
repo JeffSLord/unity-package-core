@@ -29,19 +29,20 @@ namespace Lord.Core {
             SetBtContext();
         }
         protected void SetBtContext() {
-            bt.SetContext<Character>("character", this);
-            bt.SetContext<float>("moveSpeed", characterData.moveSpeed);
-            bt.SetContext<float>("stoppingDistance", characterData.stoppingDistance);
-            bt.SetContextList<Waypoint>("waypoints", GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>().waypoints);
+            bt.context.SetContext<Character>("character", this);
+            bt.context.SetContext<float>("moveSpeed", characterData.moveSpeed);
+            bt.context.SetContext<float>("stoppingDistance", characterData.stoppingDistance);
+            bt.context.SetContextList<Waypoint>("waypoints", GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>().waypoints);
             bt.urgentNode = EnemyBT.EnemyDetectionNode(bt.context);
+            bt.minorNode = MoveBT.MoveToRandomWaypoint(bt.context);
         }
         protected override void Select0(GameObject selector, int option = 0) {
             Debug.Log("Actual override is working? can this work?");
         }
 
         public void SetCharacterDestination(Vector3 position, float stoppingDistance) {
-            bt.SetContext("targetPosition", position);
-            bt.SetContext("stoppingDistance", stoppingDistance);
+            bt.context.SetContext("targetPosition", position);
+            bt.context.SetContext("stoppingDistance", stoppingDistance);
             bt.SetManualNode(MoveBT.MoveToPoint(bt.context));
 
         }

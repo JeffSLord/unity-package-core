@@ -14,10 +14,10 @@ namespace Lord.Core {
         //         this.item = item;
         //         this.searchRadius = searchRadius;
         //     }
-        private static NodeStates Pickup(Dictionary<string, object> context) {
+        private static NodeStates Pickup(Context context) {
             // Debug.Log(item);
             Item _item;
-            if (context.TryGetValue<Item>("item", out _item)) {
+            if (context.data.TryGetValue<Item>("item", out _item)) {
                 GameObject.Destroy(_item.gameObject);
                 return NodeStates.SUCCESS;
             } else {
@@ -30,11 +30,11 @@ namespace Lord.Core {
             //     return NodeStates.FAILURE;
             // }
         }
-        public static Node PickupNode(Dictionary<string, object> context) {
+        public static Node PickupNode(Context context) {
             return new TaskContextNode(Pickup, context, "Pickup Item");
         }
 
-        public static Node PickupSequence(Dictionary<string, object> context) {
+        public static Node PickupSequence(Context context) {
             return new SequenceSeq(new List<Node> {
                 MoveBT.MoveToPoint(context),
                 PickupNode(context)

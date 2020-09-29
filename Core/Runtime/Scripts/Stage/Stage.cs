@@ -8,9 +8,8 @@ namespace Lord.Core {
         public List<Waypoint> waypoints;
         void Awake() {
             waypoints = new List<Waypoint>();
-        }
-        void Start() {
             waypoints = GetComponentsInChildren<Waypoint>().ToList();
         }
+        void Start() { }
     }
 }

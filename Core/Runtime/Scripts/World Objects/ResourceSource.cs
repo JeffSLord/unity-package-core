@@ -63,7 +63,7 @@ namespace Lord.Core {
                 // WorkBT workBT = new WorkBT(_playerController.character, this.gameObject, this.harvestPoint.position);
                 // _playerController.character.bt.context.resourceSource = this;
                 BehaviorTree _bt = _playerController.character.bt;
-                _bt.SetContext("resourceSource", this);
+                _bt.context.SetContext("resourceSource", this);
                 _bt.SetManualNode(WorkBT.WorkResourceSourceSequence(_bt.context));
             } else if (selector.GetComponent<Character>() != null) {
                 // AssignCharacter(selector.GetComponent<Character>());

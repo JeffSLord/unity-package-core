@@ -4,39 +4,39 @@ using System.Linq;
 using UnityEngine;
 
 namespace Lord.Core {
-    public class BTContext {
-        public Dictionary<string, object> context;
+    public class Context {
+        public Dictionary<string, object> data;
 
-        public BTContext() {
-            context = new Dictionary<string, object>();
+        public Context() {
+            data = new Dictionary<string, object>();
         }
 
         public T SetContext<T>(string name, T obj) {
-            context[name] = obj;
-            return (T) context[name];
+            data[name] = obj;
+            return (T) data[name];
         }
         public List<T> SetContextList<T>(string name, List<T> obj) {
             List<T> _val;
-            if (context.TryGetValue<List<T>>(name, out _val)) {
-                context[name] = ((List<T>) context[name]).Union(obj).ToList();
+            if (data.TryGetValue<List<T>>(name, out _val)) {
+                data[name] = ((List<T>) data[name]).Union(obj).ToList();
             } else {
                 SetContext<List<T>>(name, obj);
             }
-            return (List<T>) context[name];
+            return (List<T>) data[name];
         }
         public void RemoveContext<T>(string name) {
             T _val;
-            if (context.TryGetValue<T>(name, out _val)) {
-                context.Remove(name);
+            if (data.TryGetValue<T>(name, out _val)) {
+                data.Remove(name);
             }
         }
         // Return true if fully removed, false if list still has elements
         public bool RemoveContextList<T>(string name, List<T> obj) {
             List<T> _val;
-            if (context.TryGetValue<List<T>>(name, out _val)) {
-                List<T> _l1 = ((List<T>) context[name]).Except(obj).ToList();
+            if (data.TryGetValue<List<T>>(name, out _val)) {
+                List<T> _l1 = ((List<T>) data[name]).Except(obj).ToList();
                 if (_l1.Count > 0) {
-                    context[name] = _l1;
+                    data[name] = _l1;
                     return false;
                 } else {
                     RemoveContext<List<T>>(name);

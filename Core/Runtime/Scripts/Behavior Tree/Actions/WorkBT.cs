@@ -14,11 +14,11 @@ namespace Lord.Core {
         //         this.workPosition = workPosition;
         //     }
 
-        private static NodeStates WorkResourceSource(Dictionary<string, object> context) {
+        private static NodeStates WorkResourceSource(Context context) {
             ResourceSource _resourceSource;
             Character _character;
-            if (context.TryGetValue<ResourceSource>("resourceSource", out _resourceSource)) {
-                if (context.TryGetValue<Character>("character", out _character)) {
+            if (context.data.TryGetValue<ResourceSource>("resourceSource", out _resourceSource)) {
+                if (context.data.TryGetValue<Character>("character", out _character)) {
                     if (_resourceSource != null) {
                         _resourceSource.AssignCharacter(_character);
                         return NodeStates.RUNNING;
@@ -30,17 +30,17 @@ namespace Lord.Core {
             }
             return NodeStates.FAILURE;
         }
-        public static Node WorkResourceSourceNode(Dictionary<string, object> context) {
+        public static Node WorkResourceSourceNode(Context context) {
             return new TaskContextNode(WorkResourceSource, context, "Work Resource Source");
         }
-        private static NodeStates WorkResourceSourceAnim(Dictionary<string, object> context) {
+        private static NodeStates WorkResourceSourceAnim(Context context) {
             Character _character;
-            if (context.TryGetValue<Character>("character", out _character)) {
+            if (context.data.TryGetValue<Character>("character", out _character)) {
                 _character.animator.Play("Attack", 0);
                 return NodeStates.SUCCESS;
             } else { return NodeStates.FAILURE; }
         }
-        public static Node WorkResourceSourceAnimNode(Dictionary<string, object> context) {
+        public static Node WorkResourceSourceAnimNode(Context context) {
             return new TaskContextNode(WorkResourceSourceAnim, context, "Animation");
         }
         // private NodeStates WorkResourceSourceFinish() {
@@ -51,7 +51,7 @@ namespace Lord.Core {
         // public TaskNode WorkResourceSourceFinishNode() {
         //     return new TaskNode(WorkResourceSourceFinishNode, "Work Finsished");
         // }
-        public static Node WorkResourceSourceSequence(Dictionary<string, object> context) {
+        public static Node WorkResourceSourceSequence(Context context) {
             // ResourceSource _resourceSource = workObject.GetComponent<ResourceSource>();
             // WOD_ResourceSource _wod = (WOD_ResourceSource) _resourceSource.worldObjectData;
             // this.stoppingDistance = _wod.harvestDistance;

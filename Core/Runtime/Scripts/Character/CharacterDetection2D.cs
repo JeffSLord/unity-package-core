@@ -13,16 +13,16 @@ namespace Lord.Core {
                 List<Character> _charInRange = new List<Character> { _char };
                 // Debug.Log(_char.gameObject.name);
                 if (_char.IsEnemy(character)) { // Character is enemy
-                    character.bt.SetContextList<Character>("enemiesInRange", _charInRange);
-                    character.bt.SetContext<bool>("isEnemyVisible", true);
+                    character.bt.context.SetContextList<Character>("enemiesInRange", _charInRange);
+                    character.bt.context.SetContext<bool>("isEnemyVisible", true);
 
-                    character.bt.SetContext<Transform>("targetTransform", _char.transform);
+                    character.bt.context.SetContext<Transform>("targetTransform", _char.transform);
 
                     Debug.Log("CHARACTER IS AN ENEMY");
 
                 } else { // Character is not enemy
                     Debug.Log("CHARACTER IS NOT AN ENEMY");
-                    character.bt.SetContextList<Character>("friendliesInRange", _charInRange);
+                    character.bt.context.SetContextList<Character>("friendliesInRange", _charInRange);
                 }
                 // if (Vector3.Distance (transform.position, player.position) < sightReach && Vector3.Angle (target.position - transform.position, transform.forward) <= fov)
             }
@@ -34,11 +34,11 @@ namespace Lord.Core {
                 Character2D _char = _col.character;
                 List<Character> _charLeftRange = new List<Character> { _char };
                 if (_char.IsEnemy(character)) {
-                    if (character.bt.RemoveContextList<Character>("enemiesInRange", _charLeftRange)) {
-                        character.bt.SetContext("isEnemyVisible", false);
+                    if (character.bt.context.RemoveContextList<Character>("enemiesInRange", _charLeftRange)) {
+                        character.bt.context.SetContext("isEnemyVisible", false);
                     }
                 } else {
-                    character.bt.RemoveContextList<Character>("friendliesInRange", _charLeftRange);
+                    character.bt.context.RemoveContextList<Character>("friendliesInRange", _charLeftRange);
                     // character.bt.context.friendliesInRange.Remove(_char);
                 }
             }

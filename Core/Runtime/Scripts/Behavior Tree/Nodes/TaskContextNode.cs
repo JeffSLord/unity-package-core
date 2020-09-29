@@ -4,17 +4,17 @@ namespace Lord.Core {
 
     public class TaskContextNode : Node {
         /* Method signature for the action. */
-        public delegate NodeStates ActionNodeDelegate(Dictionary<string, object> context);
+        public delegate NodeStates ActionNodeDelegate(Context context);
 
         /* The delegate that is called to evaluate this node */
         private ActionNodeDelegate m_action;
-        private Dictionary<string, object> context;
+        private Context context;
 
         /* Because this node contains no logic itself,
          * the logic must be passed in in the form of 
          * a delegate. As the signature states, the action
          * needs to return a NodeStates enum */
-        public TaskContextNode(ActionNodeDelegate action, Dictionary<string, object> context, string nodeName = "<node>") {
+        public TaskContextNode(ActionNodeDelegate action, Context context, string nodeName = "<node>") {
             m_action = action;
             this.nodeName = nodeName;
             this.context = context;
