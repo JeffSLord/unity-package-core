@@ -79,6 +79,13 @@ namespace Lord.Core {
         public static Node TurnNode(Dictionary<string, object> context) {
             return new TaskContextNode(Turn, context, "Turn");
         }
+        public static NodeStates SelectRandomWaypoint(Dictionary<string, object> context) {
+            List<Waypoint> _waypoints;
+            if (context.TryGetValue<List<Waypoint>>("waypoints", out _waypoints)) {
+                System.Random _rand = new System.Random();
+                int _index = _rand.Next(_waypoints.Count);
+            }
+        }
         public static Node MoveToPoint(Dictionary<string, object> context) {
             return new SequenceSeq(new List<Node> {
                 SetDestinationNode(context),

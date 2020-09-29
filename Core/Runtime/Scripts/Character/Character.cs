@@ -32,6 +32,7 @@ namespace Lord.Core {
             bt.SetContext<Character>("character", this);
             bt.SetContext<float>("moveSpeed", characterData.moveSpeed);
             bt.SetContext<float>("stoppingDistance", characterData.stoppingDistance);
+            bt.SetContextList<Waypoint>("waypoints", GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>().waypoints);
             bt.urgentNode = EnemyBT.EnemyDetectionNode(bt.context);
         }
         protected override void Select0(GameObject selector, int option = 0) {

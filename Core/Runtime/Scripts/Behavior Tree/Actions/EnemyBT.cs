@@ -40,7 +40,7 @@ namespace Lord.Core {
         }
         public static Node EnemyDetectionNode(Dictionary<string, object> context) {
             // MoveBT _moveBT = new MoveBT(context.character, new Vector3(0, 0, 0));
-            return new SequenceSeq(new List<Node> {
+            return new SequencePar(new List<Node> {
                 EnemyBT.IsEnemyDetectedNode(context),
                 MoveBT.FollowTransform(context)
             });
