@@ -11,18 +11,34 @@ namespace Lord.Core {
             float _stoppingDistance;
             Vector3 _targetPosition;
             float _moveSpeed;
-            if (context.data.TryGetValue<Character>("character", out _character)) {
-                if (context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
-                    if (context.data.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
-                        if (context.data.TryGetValue<float>("moveSpeed", out _moveSpeed)) {
-                            _character.navMeshAgent.destination = _targetPosition;
-                            _character.navMeshAgent.stoppingDistance = _stoppingDistance;
-                            _character.navMeshAgent.speed = _moveSpeed;
-                            return NodeStates.SUCCESS;
-                        }
-                    }
-                }
+            if(!context.data.TryGetValue<Character>("character", out _character)){
+                return NodeStates.FAILURE;
             }
+            if(!context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)){
+                return NodeStates.FAILURE;
+            }
+            if(!context.data.TryGetValue<float>("stoppingDistance", out _stoppingDistance)){
+                return NodeStates.FAILURE;
+            }
+            if(!context.data.TryGetValue<float>("moveSpeed", out _moveSpeed)){
+                return NodeStates.FAILURE;
+            }
+            _character.navMeshAgent.destination = _targetPosition;
+            _character.navMeshAgent.stoppingDistance = _stoppingDistance;
+            _character.navMeshAgent.speed = _moveSpeed;
+            return NodeStates.SUCCESS;
+            // if (context.data.TryGetValue<Character>("character", out _character)) {
+            //     if (context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
+            //         if (context.data.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
+            //             if (context.data.TryGetValue<float>("moveSpeed", out _moveSpeed)) {
+            //                 _character.navMeshAgent.destination = _targetPosition;
+            //                 _character.navMeshAgent.stoppingDistance = _stoppingDistance;
+            //                 _character.navMeshAgent.speed = _moveSpeed;
+            //                 return NodeStates.SUCCESS;
+            //             }
+            //         }
+            //     }
+            // }
             return NodeStates.FAILURE;
         }
         public static Node SetDestinationNode(Context context) {
@@ -32,49 +48,83 @@ namespace Lord.Core {
             Character _character;
             float _stoppingDistance;
             Vector3 _targetPosition;
-            if (context.data.TryGetValue<Character>("character", out _character)) {
-                if (context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
-                    if (context.data.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
-                        if (Vector3.Distance(_character.navMeshAgent.transform.position, _targetPosition) <= _stoppingDistance + 0.05) {
-                            _character.animator.SetBool("IsMoving", false);
-                            return NodeStates.SUCCESS;
-                        } else {
-                            return NodeStates.RUNNING;
-                        }
-                    }
-                }
+            if(!context.data.TryGetValue<Character>("character", out _character)){
+                return NodeStates.FAILURE;
             }
-            return NodeStates.FAILURE;
+            if(!context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)){
+                return NodeStates.FAILURE;
+            }
+            if(!context.data.TryGetValue<float>("stoppingDistance", out _stoppingDistance)){
+                return NodeStates.FAILURE;
+            }
+            if (Vector3.Distance(_character.navMeshAgent.transform.position, _targetPosition) <= _stoppingDistance + 0.05) {
+                _character.animator.SetBool("IsMoving", false);
+                return NodeStates.SUCCESS;
+            } else {
+                return NodeStates.RUNNING;
+            }
+
+            // if (context.data.TryGetValue<Character>("character", out _character)) {
+            //     if (context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
+            //         if (context.data.TryGetValue<float>("stoppingDistance", out _stoppingDistance)) {
+            //             if (Vector3.Distance(_character.navMeshAgent.transform.position, _targetPosition) <= _stoppingDistance + 0.05) {
+            //                 _character.animator.SetBool("IsMoving", false);
+            //                 return NodeStates.SUCCESS;
+            //             } else {
+            //                 return NodeStates.RUNNING;
+            //             }
+            //         }
+            //     }
+            // }
+            // return NodeStates.FAILURE;
         }
         public static Node CheckDestinationReachedNode(Context context) {
             return new TaskContextNode(CheckDestinationReached, context, "Check Destination Reached");
         }
-        private static NodeStates SetTransformPosition(Context context) {
+        private static NodeStates SetTargetTransform(Context context) {
             Character _character;
             Transform _transform;
-            if (context.data.TryGetValue<Character>("character", out _character)) {
-                if (context.data.TryGetValue<Transform>("targetTransform", out _transform)) {
-                    context.SetContext<Vector3>("targetPosition", _transform.position);
-                    return NodeStates.SUCCESS;
-                }
+            if(!context.data.TryGetValue<Character>("character", out _character)){
+                return NodeStates.FAILURE;
             }
-            return NodeStates.FAILURE;
+            if(!context.data.TryGetValue<Transform>("targetTransform", out _transform)){
+                return NodeStates.FAILURE;
+            }
+            context.SetContext<Vector3>("targetPosition", _transform.position);
+            return NodeStates.SUCCESS;
+            // if (context.data.TryGetValue<Character>("character", out _character)) {
+            //     if (context.data.TryGetValue<Transform>("targetTransform", out _transform)) {
+            //         context.SetContext<Vector3>("targetPosition", _transform.position);
+            //         return NodeStates.SUCCESS;
+            //     }
+            // }
+            // return NodeStates.FAILURE;
         }
-        public static Node SetTransformPositionNode(Context context) {
-            return new TaskContextNode(SetTransformPosition, context, "Set transform position");
+        public static Node SetTargetTransformNode(Context context) {
+            return new TaskContextNode(SetTargetTransform, context, "Set transform position");
         }
         private static NodeStates Turn(Context context) {
             Character _character;
             Vector3 _targetPosition;
-            if (context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
-                if (context.data.TryGetValue<Character>("character", out _character)) {
-                    Vector3 _targetDir = _targetPosition - _character.transform.position;
-                    float _angle = Mathf.Atan2(_targetDir.y, _targetDir.x) * Mathf.Rad2Deg;
-                    _character.transform.rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
-                    return NodeStates.SUCCESS;
-                }
+            if(!context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)){
+                return NodeStates.FAILURE;
             }
-            return NodeStates.FAILURE;
+            if(!context.data.TryGetValue<Character>("character", out _character)){
+                return NodeStates.FAILURE;
+            }
+            Vector3 _targetDir = _targetPosition - _character.transform.position;
+            float _angle = Mathf.Atan2(_targetDir.y, _targetDir.x) * Mathf.Rad2Deg;
+            _character.transform.rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
+            return NodeStates.SUCCESS;
+            // if (context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)) {
+            //     if (context.data.TryGetValue<Character>("character", out _character)) {
+            //         Vector3 _targetDir = _targetPosition - _character.transform.position;
+            //         float _angle = Mathf.Atan2(_targetDir.y, _targetDir.x) * Mathf.Rad2Deg;
+            //         _character.transform.rotation = Quaternion.AngleAxis(_angle, Vector3.forward);
+            //         return NodeStates.SUCCESS;
+            //     }
+            // }
+            // return NodeStates.FAILURE;
         }
         public static Node TurnNode(Context context) {
             return new TaskContextNode(Turn, context, "Turn");
@@ -96,14 +146,14 @@ namespace Lord.Core {
             return new TaskContextNode(SelectRandomWaypoint, context, "Selecting random waypoint");
         }
         public static Node MoveToPoint(Context context) {
-            return new SequenceSeq(new List<Node> {
+            return new SequenceSeries(new List<Node> {
                 SetDestinationNode(context),
                 CheckDestinationReachedNode(context),
                 TurnNode(context)
             });
         }
         public static Node MoveToPointUpdate(Context context) {
-            return new SequencePar(new List<Node> {
+            return new SequenceParallel(new List<Node> {
                 SetDestinationNode(context),
                 CheckDestinationReachedNode(context),
                 TurnNode(context)
@@ -111,13 +161,13 @@ namespace Lord.Core {
         }
 
         public static Node FollowTransform(Context context) {
-            return new SequencePar(new List<Node> {
-                SetTransformPositionNode(context),
+            return new SequenceParallel(new List<Node> {
+                SetTargetTransformNode(context),
                 MoveToPointUpdate(context)
             });
         }
         public static Node MoveToRandomWaypoint(Context context) {
-            return new SequenceSeq(new List<Node> {
+            return new SequenceSeries(new List<Node> {
                 SelectRandomWaypointNode(context),
                 MoveToPointUpdate(context)
             });

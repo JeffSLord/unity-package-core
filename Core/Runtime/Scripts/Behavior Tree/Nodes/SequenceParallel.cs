@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lord.Core {
-    public class SequencePar : Node {
+    public class SequenceParallel : Node {
         private List<Node> nodeList = new List<Node>();
-        public SequencePar(List<Node> nodes) {
+        public SequenceParallel(List<Node> nodes) {
             this.nodeList = nodes;
         }
 
@@ -14,7 +14,7 @@ namespace Lord.Core {
         public override NodeStates Evaluate() {
             bool anyChildRunning = false;
             foreach (Node node in nodeList) {
-                Debug.Log("Sequence node state: " + node.nodeName + "-" + node.nodeState);
+                Debug.Log("[BT SEQUENCE PARALLEL] " + node.nodeName + "-" + node.nodeState);
                 switch (node.Evaluate()) {
                     case NodeStates.FAILURE:
                         this.nodeState = NodeStates.FAILURE;

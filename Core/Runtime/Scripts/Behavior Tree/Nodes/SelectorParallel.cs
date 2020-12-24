@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lord.Core {
-    public class SelectorPar : Node {
+    public class SelectorParallel : Node {
         /** The child nodes for this selector */
         protected List<Node> nodeList = new List<Node>();
 
         /** The constructor requires a list of child nodes to be 
          * passed in*/
-        public SelectorPar(List<Node> nodes) {
+        public SelectorParallel(List<Node> nodes) {
             this.nodeList = nodes;
         }
 

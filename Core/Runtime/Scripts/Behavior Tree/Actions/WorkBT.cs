@@ -55,7 +55,7 @@ namespace Lord.Core {
             // ResourceSource _resourceSource = workObject.GetComponent<ResourceSource>();
             // WOD_ResourceSource _wod = (WOD_ResourceSource) _resourceSource.worldObjectData;
             // this.stoppingDistance = _wod.harvestDistance;
-            return new SequenceSeq(new List<Node> {
+            return new SequenceSeries(new List<Node> {
                 MoveBT.MoveToPoint(context),
                 MoveBT.TurnNode(context),
                 WorkResourceSourceAnimNode(context),

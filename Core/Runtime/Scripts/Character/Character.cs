@@ -33,8 +33,8 @@ namespace Lord.Core {
             bt.context.SetContext<float>("moveSpeed", characterData.moveSpeed);
             bt.context.SetContext<float>("stoppingDistance", characterData.stoppingDistance);
             bt.context.SetContextList<Waypoint>("waypoints", GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>().waypoints);
-            bt.urgentNode = EnemyBT.EnemyDetectionNode(bt.context);
-            bt.minorNode = MoveBT.MoveToRandomWaypoint(bt.context);
+            bt.highPriorityNode = EnemyBT.EnemyDetectionNode(bt.context);
+            bt.lowPriorityNode = MoveBT.MoveToRandomWaypoint(bt.context);
         }
         protected override void Select0(GameObject selector, int option = 0) {
             Debug.Log("Actual override is working? can this work?");

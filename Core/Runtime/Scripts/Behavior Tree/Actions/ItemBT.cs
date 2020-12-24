@@ -35,7 +35,7 @@ namespace Lord.Core {
         }
 
         public static Node PickupSequence(Context context) {
-            return new SequenceSeq(new List<Node> {
+            return new SequenceSeries(new List<Node> {
                 MoveBT.MoveToPoint(context),
                 PickupNode(context)
             });

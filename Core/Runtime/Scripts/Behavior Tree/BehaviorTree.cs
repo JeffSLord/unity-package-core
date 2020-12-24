@@ -16,13 +16,13 @@ namespace Lord.Core {
         public NodeStates manualPriorityState;
         public bool isMnaualRunning;
         // high priority (enemy detection, hunger)
-        public Node urgentNode;
-        public NodeStates urgentState;
-        public bool isUrgentRunning;
+        public Node highPriorityNode;
+        public NodeStates highPriorityState;
+        public bool isHighPriorityRunning;
         // low priority (jobs, etc)
-        public Node minorNode;
-        public NodeStates minorState;
-        public bool isMinorRunning;
+        public Node lowPriorityNode;
+        public NodeStates lowPriorityState;
+        public bool isLowPriorityRunning;
 
         void Awake() {
             // this.context = new Dictionary<string, object>();
@@ -40,65 +40,65 @@ namespace Lord.Core {
         public void SetManualNode(Node node) {
             if (manualPriorityNode != null) {
                 StopAllCoroutines();
-                isMnaualRunning = false;
+                this.isMnaualRunning = false;
             }
             manualPriorityNode = node;
             if (manualPriorityNode != null) {
-                isMnaualRunning = true;
+                this.isMnaualRunning = true;
                 StartCoroutine(Execute());
             }
         }
         private IEnumerator Execute() {
             while (true) {
-                isUrgentRunning = true;
-                isMinorRunning = true;
-                isMnaualRunning = true;
+                this.isHighPriorityRunning = true;
+                this.isLowPriorityRunning = true;
+                this.isMnaualRunning = true;
                 Debug.Log("BT Tick");
                 // manual task
                 if (manualPriorityNode != null) {
-                    isUrgentRunning = false;
-                    isMinorRunning = false;
-                    manualPriorityState = manualPriorityNode.Evaluate();
+                    this.isHighPriorityRunning = false;
+                    this.isLowPriorityRunning = false;
+                    this.manualPriorityState = manualPriorityNode.Evaluate();
                     switch (manualPriorityState) {
                         case NodeStates.SUCCESS:
-                            isUrgentRunning = true;
-                            isMinorRunning = true;
+                            this.isHighPriorityRunning = true;
+                            this.isLowPriorityRunning = true;
                             SetManualNode(null);
                             break;
                         case NodeStates.FAILURE:
-                            isUrgentRunning = true;
-                            isMinorRunning = true;
+                            this.isHighPriorityRunning = true;
+                            this.isLowPriorityRunning = true;
                             SetManualNode(null);
                             break;
                         case NodeStates.RUNNING:
-                            isUrgentRunning = false;
-                            isMinorRunning = false;
+                            this.isHighPriorityRunning = false;
+                            this.isLowPriorityRunning = false;
                             break;
                         default:
                             break;
                     }
                 } else {
                     // high priority
-                    if (isUrgentRunning && urgentNode != null) {
-                        urgentState = urgentNode.Evaluate();
-                        switch (urgentState) {
+                    if (isHighPriorityRunning && highPriorityNode != null) {
+                        this.highPriorityState = highPriorityNode.Evaluate();
+                        switch (highPriorityState) {
                             case NodeStates.SUCCESS:
-                                isMinorRunning = true;
+                                this.isLowPriorityRunning = true;
                                 break;
                             case NodeStates.FAILURE: // 
-                                isMinorRunning = true;
+                                this.isLowPriorityRunning = true;
                                 break;
                             case NodeStates.RUNNING:
-                                isMinorRunning = false;
+                                this.isLowPriorityRunning = false;
                                 break;
                             default:
                                 break;
                         }
                     }
                     // low priority
-                    if (isMinorRunning && minorNode != null) {
-                        minorState = minorNode.Evaluate();
-                        switch (minorState) {
+                    if (isLowPriorityRunning && lowPriorityNode != null) {
+                        this.lowPriorityState = lowPriorityNode.Evaluate();
+                        switch (lowPriorityState) {
                             case NodeStates.RUNNING:
                                 break;
                             case NodeStates.SUCCESS:
