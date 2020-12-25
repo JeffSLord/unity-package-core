@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace Lord.Core
 {
+    // [System.Serializable]
     public class GridBuildingManager : MonoBehaviour
     {
         public static GridBuildingManager instance;
         public Dictionary<Vector2Int, bool> availableGrid;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             if (instance != null && instance != this) {
                 Destroy(this.gameObject);
