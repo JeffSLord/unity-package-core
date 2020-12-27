@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace Lord.Core {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Character2D : Character {
+    public class Character2DBehavior : CharacterBehavior {
         protected override void Start() {
             base.Start();
             navMeshAgent.updateRotation = false;
@@ -13,15 +13,15 @@ namespace Lord.Core {
         }
         private bool LineOfSight(Transform target) {
             RaycastHit hit;
-            if (Vector3.Angle(target.position - transform.position, transform.forward) <= fov &&
+            if (Vector3.Angle(target.position - transform.position, transform.forward) <= base.character.fov &&
                 Physics.Linecast(transform.position, target.position, out hit) &&
                 hit.collider.transform == target) {
                 return true;
             }
             return false;
         }
-        public bool IsEnemy(Character character) {
-            return character.faction != this.faction;
-        }
+        // public bool IsEnemy(CharacterBehavior characterBehavior) {
+        //     return characterBehavior.character.faction != this.faction;
+        // }
     }
 }

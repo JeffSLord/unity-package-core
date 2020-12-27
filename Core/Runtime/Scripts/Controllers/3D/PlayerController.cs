@@ -8,7 +8,7 @@ namespace Lord.Core {
         private MouseScan playerRaycast;
         private BuilderController builderController;
         private CamFloatController floatController;
-        public Character character;
+        public CharacterBehavior characterBehavior;
         private void Start() {
             playerRaycast = GetComponent<MouseScan>();
             builderController = GetComponent<BuilderController>();
@@ -53,19 +53,19 @@ namespace Lord.Core {
             GameObject _hitObject = playerRaycast.hitObject;
             if (playerRaycast.hitObject != null) {
                 // if currently selecting something (doing something), stop
-                if (character.currentSelection != null) {
-                    character.currentSelection.Deselect(this.gameObject);
-                    character.currentSelection = null;
+                if (characterBehavior.currentSelection != null) {
+                    characterBehavior.currentSelection.Deselect(this.gameObject);
+                    characterBehavior.currentSelection = null;
                 }
                 Selectable _hitSelectable = _hitObject.GetComponentInParent<Selectable>();
                 if (_hitSelectable != null) {
                     _hitSelectable.Select1(this.gameObject, 1);
-                    character.currentSelection = _hitSelectable;
+                    characterBehavior.currentSelection = _hitSelectable;
                 } else {
                     // MoveBT moveContext = new MoveBT(character, playerRaycast.hitLocation, 1.0f);
-                    character.bt.context.SetContext("targetPosition", playerRaycast.hitLocation);
-                    character.bt.context.SetContext("stoppingDistance", 1.0f);
-                    character.bt.SetManualNode(MoveBT.MoveToPoint(character.bt.context));
+                    characterBehavior.character.bt.context.SetContext("targetPosition", playerRaycast.hitLocation);
+                    characterBehavior.character.bt.context.SetContext("stoppingDistance", 1.0f);
+                    characterBehavior.character.bt.SetManualNode(MoveBT.MoveToPoint(characterBehavior.character.bt.context));
                 }
             }
         }

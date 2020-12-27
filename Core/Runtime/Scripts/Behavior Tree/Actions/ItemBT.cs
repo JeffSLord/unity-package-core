@@ -16,8 +16,8 @@ namespace Lord.Core {
         //     }
         private static NodeStates Pickup(Context context) {
             // Debug.Log(item);
-            Item _item;
-            if (context.data.TryGetValue<Item>("item", out _item)) {
+            ItemBehavior _item;
+            if (context.data.TryGetValue<ItemBehavior>("item", out _item)) {
                 GameObject.Destroy(_item.gameObject);
                 return NodeStates.SUCCESS;
             } else {

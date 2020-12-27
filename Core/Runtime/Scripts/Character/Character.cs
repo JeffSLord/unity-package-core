@@ -1,39 +1,37 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace Lord.Core {
-    [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(Selectable))]
-    [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(BehaviorTree))]
-    public class Character : WorldObject {
-        public NavMeshAgent navMeshAgent;
-        public Animator animator;
-        public Selectable currentSelection;
+namespace Lord.Core
+{
+    [System.Serializable]
+    public class Character
+    {
+        public string name;
+        public float moveSpeed;
+        public float stoppingDistance;
         public BehaviorTree bt;
-        public CharacterData characterData;
         public List<WorkPriority> workPriority;
+        public Settlement settlement;
+        public int faction;
         public float fov;
         public float voiceRange;
-        public int faction;
+        public float noiseRange;
 
-        protected override void Awake() {
+        public Character(){
+            this.moveSpeed = 1.0f;
+            this.stoppingDistance = 1.0f;
+            this.faction = 1;
+            this.fov = 90;
+            this.voiceRange = 20;
+            this.noiseRange = 20;
+            bt = new BehaviorTree();
+        }
 
-        }
-        protected override void Start() {
-            base.Start();
-            navMeshAgent = GetComponent<NavMeshAgent>();
-            animator = GetComponent<Animator>();
-            bt = GetComponent<BehaviorTree>();
-            SetBtContext();
-            // workPriority = new List<WorkPriority>();
-        }
-        protected void SetBtContext() {
+        private void InitBT(){
             bt.context.SetContext<Character>("character", this);
-            bt.context.SetContext<float>("moveSpeed", characterData.moveSpeed);
-            bt.context.SetContext<float>("stoppingDistance", characterData.stoppingDistance);
+            bt.context.SetContext<float>("moveSpeed", this.moveSpeed);
+            bt.context.SetContext<float>("stoppingDistance", this.stoppingDistance);
             bt.context.SetContextList<Waypoint>("waypoints", GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>().waypoints);
             bt.context.SetContextList<WorkPriority>("workPriority", workPriority);
             bt.highPriorityNode = EnemyBT.EnemyDetectionNode(bt.context);
@@ -43,22 +41,8 @@ namespace Lord.Core {
             //! TEMP
             bt.context.SetContext<Settlement>("settlement", GameObject.FindGameObjectWithTag("Settlement").GetComponent<Settlement>());
         }
-        protected override void Select0(GameObject selector, int option = 0) {
-            Debug.Log("Actual override is working? can this work?");
-        }
-
-        public void SetCharacterDestination(Vector3 position, float stoppingDistance) {
-            bt.context.SetContext("targetPosition", position);
-            bt.context.SetContext("stoppingDistance", stoppingDistance);
-            bt.SetManualNode(MoveBT.MoveToPoint(bt.context));
-
+        public bool IsEnemy(Character character) {
+            return character.faction != this.faction;
         }
     }
-
-    // [System.Serializable]
-    // public class CharacterNew
-    // {
-    //     public string name;
-    //     public 
-    // }
 }

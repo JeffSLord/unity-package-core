@@ -8,15 +8,15 @@ namespace Lord.Core {
         public bool running = false;
         public float pickupDistance = 1.0f;
 
-        public void Pickup(Character character) {
+        public void Pickup(CharacterBehavior character) {
             running = true;
             StartCoroutine(PickupCoroutine(character));
         }
         public void Pickup(PlayerController playerController) {
-            Pickup(playerController.character);
+            Pickup(playerController.characterBehavior);
         }
 
-        private IEnumerator PickupCoroutine(Character character) {
+        private IEnumerator PickupCoroutine(CharacterBehavior character) {
             while (running) {
                 if (character.currentSelection != GetComponent<Selectable>()) {
                     StopAllCoroutines();

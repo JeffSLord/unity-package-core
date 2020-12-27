@@ -6,7 +6,7 @@ namespace Lord.Core {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Selectable))]
     // [RequireComponent(typeof(Pickupable))]
-    public class Item : WorldObject {
+    public class ItemBehavior : WorldObject {
         protected override void Start() {
             base.Start();
         }
@@ -15,9 +15,9 @@ namespace Lord.Core {
             if (playerController != null) {
                 Debug.Log("Starting pickup...");
                 // ItemBT itemBT = new ItemBT(playerController.character, this);
-                BehaviorTree _bt = playerController.character.bt;
-                _bt.context.SetContext("item", this);
-                _bt.SetManualNode(ItemBT.PickupSequence(_bt.context));
+                BehaviorTreeBehavior _bt = playerController.characterBehavior.btBehavior;
+                _bt.behaviorTree.context.SetContext("item", this);
+                _bt.behaviorTree.SetManualNode(ItemBT.PickupSequence(_bt.behaviorTree.context));
             }
         }
     }

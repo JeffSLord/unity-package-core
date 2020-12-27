@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24db004c85c309468e71b616c321637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 3657651825418451607}
+  characterBehavior: {fileID: 3657651825418451607}
 --- !u!1 &1701441672156357022
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,13 +194,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldObjectData: {fileID: 0}
+  character:
+    name: 
+    moveSpeed: 1
+    stoppingDistance: 1
+    workPriority: []
+    settlement: {fileID: 0}
+    faction: 1
+    fov: 90
+    voiceRange: 20
+    noiseRange: 20
   navMeshAgent: {fileID: 3657651825418451603}
   animator: {fileID: 3657651825418451602}
   currentSelection: {fileID: 0}
-  bt: {fileID: 3657651825418451600}
-  fov: 0
-  voiceRange: 0
-  faction: 1
+  btBehavior: {fileID: 0}
 --- !u!114 &3657651825418451600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,18 +215,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701441672156357022}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0bbf609774f9b94c9c2a0002be770bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tickRate: 0.25
-  manualPriorityState: 0
-  isMnaualRunning: 0
-  urgentState: 0
-  isUrgentRunning: 0
-  minorState: 0
-  isMinorRunning: 0
 --- !u!195 &3657651825418451603
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -227,7 +227,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701441672156357022}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -249,12 +249,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701441672156357022}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6414b6e54ce3fce428db3d2199ba386c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 3657651825418451607}
+  characterBehavior: {fileID: 0}
   mouseScan: {fileID: 0}
   mouseFollowSpeed: 400
   movementSpeed: 2
@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae04d828deec764292ffffda956cd54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 3657651825418451607}
+  character2DBehavior: {fileID: 3657651825418451607}
 --- !u!1 &7543021671238862291
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,7 +27,7 @@ namespace Lord.Core {
             }
             return false;
         }
-        public bool AddItem(Item item, int count = 1) {
+        public bool AddItem(ItemBehavior item, int count = 1) {
             bool _added = AddItem((WOD_Item) item.worldObjectData, count);
             if (_added) {
                 GameObject.Destroy(item);

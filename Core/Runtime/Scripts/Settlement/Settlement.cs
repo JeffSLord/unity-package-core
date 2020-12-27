@@ -7,7 +7,7 @@ namespace Lord.Core
     {
         // public int numCharacters;
         // public int numFarms;
-        public List<Character> characters;
+        public List<CharacterBehavior> characters;
         public List<GameObject> houses;
         public List<WorkAssignment> farms;
         public GameObject characterPrefab;

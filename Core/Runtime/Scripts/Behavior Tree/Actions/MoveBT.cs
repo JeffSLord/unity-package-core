@@ -7,11 +7,11 @@ namespace Lord.Core {
 
     public static class MoveBT {
         private static NodeStates SetDestination(Context context) {
-            Character _character;
+            CharacterBehavior _character;
             float _stoppingDistance;
             Vector3 _targetPosition;
             float _moveSpeed;
-            if(!context.data.TryGetValue<Character>("character", out _character)){
+            if(!context.data.TryGetValue<CharacterBehavior>("character", out _character)){
                 return NodeStates.FAILURE;
             }
             if(!context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)){
@@ -32,10 +32,10 @@ namespace Lord.Core {
             return new TaskContextNode(SetDestination, context, "Set Destination");
         }
         private static NodeStates CheckDestinationReached(Context context) {
-            Character _character;
+            CharacterBehavior _character;
             float _stoppingDistance;
             Vector3 _targetPosition;
-            if(!context.data.TryGetValue<Character>("character", out _character)){
+            if(!context.data.TryGetValue<CharacterBehavior>("character", out _character)){
                 return NodeStates.FAILURE;
             }
             if(!context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)){
@@ -55,9 +55,9 @@ namespace Lord.Core {
             return new TaskContextNode(CheckDestinationReached, context, "Check Destination Reached");
         }
         private static NodeStates SetTargetTransform(Context context) {
-            Character _character;
+            CharacterBehavior _character;
             Transform _transform;
-            if(!context.data.TryGetValue<Character>("character", out _character)){
+            if(!context.data.TryGetValue<CharacterBehavior>("character", out _character)){
                 return NodeStates.FAILURE;
             }
             if(!context.data.TryGetValue<Transform>("targetTransform", out _transform)){
@@ -70,12 +70,12 @@ namespace Lord.Core {
             return new TaskContextNode(SetTargetTransform, context, "Set transform position");
         }
         private static NodeStates Turn(Context context) {
-            Character _character;
+            CharacterBehavior _character;
             Vector3 _targetPosition;
             if(!context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)){
                 return NodeStates.FAILURE;
             }
-            if(!context.data.TryGetValue<Character>("character", out _character)){
+            if(!context.data.TryGetValue<CharacterBehavior>("character", out _character)){
                 return NodeStates.FAILURE;
             }
             Vector3 _targetDir = _targetPosition - _character.transform.position;

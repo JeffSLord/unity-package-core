@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Lord.Core {
     [RequireComponent(typeof(MouseScan2D))]
     public class PlayerController2D : MonoBehaviour {
-        public Character2D character;
+        public Character2DBehavior character;
         public MouseScan2D mouseScan;
         public float followMouseSpeed;
 
