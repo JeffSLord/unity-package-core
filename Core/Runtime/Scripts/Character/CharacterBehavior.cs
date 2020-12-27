@@ -23,6 +23,16 @@ namespace Lord.Core {
             navMeshAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
             btBehavior = GetComponent<BehaviorTreeBehavior>();
+
+            btBehavior.behaviorTree.context.SetContext<Character>("character", this.character);
+            btBehavior.behaviorTree.context.SetContext<CharacterBehavior>("characterBehavior", this);
+            btBehavior.behaviorTree.context.SetContext<float>("moveSpeed", this.character.moveSpeed);
+            btBehavior.behaviorTree.context.SetContext<float>("stoppingDistance", this.character.stoppingDistance);
+            btBehavior.behaviorTree.context.SetContextList<Waypoint>("waypoints", GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>().waypoints);
+            btBehavior.behaviorTree.context.SetContextList<WorkPriority>("workPriority", this.character.workPriority);
+            btBehavior.behaviorTree.context.SetContext<Settlement>("settlement", GameObject.FindGameObjectWithTag("Settlement").GetComponent<SettlementBehavior>().settlement);
+            btBehavior.behaviorTree.highPriorityNode = EnemyBT.EnemyDetectionNode(btBehavior.behaviorTree.context);
+            btBehavior.behaviorTree.lowPriorityNode = WorkBT.Work(btBehavior.behaviorTree.context);
         }
         protected override void Select0(GameObject selector, int option = 0) {
             Debug.Log("Actual override is working? can this work?");

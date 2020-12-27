@@ -7,7 +7,7 @@ namespace Lord.Core
     public class WorkAssignment
     {
         public GameObject workObject;
-        public CharacterBehavior assignedCharacter;
+        public Character assignedCharacter;
 
         public WorkAssignment(GameObject workObject){
             this.workObject = workObject;
@@ -21,7 +21,7 @@ namespace Lord.Core
                 return false;
             }
         }
-        public bool AssignCharacter(CharacterBehavior character){
+        public bool AssignCharacter(Character character){
             this.assignedCharacter = character;
             return true;
         }

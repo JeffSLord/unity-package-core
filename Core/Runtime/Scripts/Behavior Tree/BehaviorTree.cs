@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Lord.Core
-{
+namespace Lord.Core{
+    [System.Serializable]
     public class BehaviorTree
     {
         public bool isGlobalRunning;
@@ -26,6 +26,7 @@ namespace Lord.Core
 
         public BehaviorTree(){
             this.context = new Context();
+            this.isGlobalRunning = true;
         }
 
         public void SetManualNode(Node node) {

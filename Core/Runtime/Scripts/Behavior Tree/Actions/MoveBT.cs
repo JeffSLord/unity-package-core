@@ -11,7 +11,7 @@ namespace Lord.Core {
             float _stoppingDistance;
             Vector3 _targetPosition;
             float _moveSpeed;
-            if(!context.data.TryGetValue<CharacterBehavior>("character", out _character)){
+            if(!context.data.TryGetValue<CharacterBehavior>("characterBehavior", out _character)){
                 return NodeStates.FAILURE;
             }
             if(!context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)){
@@ -35,7 +35,7 @@ namespace Lord.Core {
             CharacterBehavior _character;
             float _stoppingDistance;
             Vector3 _targetPosition;
-            if(!context.data.TryGetValue<CharacterBehavior>("character", out _character)){
+            if(!context.data.TryGetValue<CharacterBehavior>("characterBehavior", out _character)){
                 return NodeStates.FAILURE;
             }
             if(!context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)){
@@ -57,7 +57,7 @@ namespace Lord.Core {
         private static NodeStates SetTargetTransform(Context context) {
             CharacterBehavior _character;
             Transform _transform;
-            if(!context.data.TryGetValue<CharacterBehavior>("character", out _character)){
+            if(!context.data.TryGetValue<CharacterBehavior>("characterBehavior", out _character)){
                 return NodeStates.FAILURE;
             }
             if(!context.data.TryGetValue<Transform>("targetTransform", out _transform)){
@@ -75,7 +75,7 @@ namespace Lord.Core {
             if(!context.data.TryGetValue<Vector3>("targetPosition", out _targetPosition)){
                 return NodeStates.FAILURE;
             }
-            if(!context.data.TryGetValue<CharacterBehavior>("character", out _character)){
+            if(!context.data.TryGetValue<CharacterBehavior>("characterBehavior", out _character)){
                 return NodeStates.FAILURE;
             }
             Vector3 _targetDir = _targetPosition - _character.transform.position;
@@ -88,16 +88,16 @@ namespace Lord.Core {
         }
         private static NodeStates SelectRandomWaypoint(Context context) {
             List<Waypoint> _waypoints;
-            if (context.data.TryGetValue<List<Waypoint>>("waypoints", out _waypoints)) {
-                Debug.Log("waypoint count " + _waypoints.Count);
-                System.Random _rand = new System.Random();
-                int _index = _rand.Next(_waypoints.Count);
-                Debug.Log(_index);
-                context.SetContext<Waypoint>("waypoint", _waypoints[_index]);
-                context.SetContext<Vector3>("targetPosition", _waypoints[_index].transform.position);
-                return NodeStates.SUCCESS;
+            if (!context.data.TryGetValue<List<Waypoint>>("waypoints", out _waypoints)) {
+                return NodeStates.FAILURE;
             }
-            return NodeStates.FAILURE;
+            // Debug.Log("waypoint count " + _waypoints.Count);
+            System.Random _rand = new System.Random();
+            int _index = _rand.Next(_waypoints.Count);
+            // Debug.Log(_index);
+            context.SetContext<Waypoint>("waypoint", _waypoints[_index]);
+            context.SetContext<Vector3>("targetPosition", _waypoints[_index].transform.position);
+            return NodeStates.SUCCESS;
         }
         public static Node SelectRandomWaypointNode(Context context) {
             return new TaskContextNode(SelectRandomWaypoint, context, "Selecting random waypoint");

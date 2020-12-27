@@ -8,20 +8,18 @@ namespace Lord.Core {
             // just check if it is within a specific range for now
             // add sight later
             bool _isEnemyVisible;
-            if (context.data.TryGetValue<bool>("isEnemyVisible", out _isEnemyVisible)) {
-                switch (_isEnemyVisible) {
-                    case (true):
-                        Debug.Log("Enememy is visible");
-                        return NodeStates.SUCCESS;
-                    case (false):
-                        return NodeStates.FAILURE;
-                    default:
-                        return NodeStates.FAILURE;
-                }
-            } else {
+            if (!context.data.TryGetValue<bool>("isEnemyVisible", out _isEnemyVisible)) {
                 return NodeStates.FAILURE;
             }
-
+            switch (_isEnemyVisible) {
+                case (true):
+                    Debug.Log("Enememy is visible");
+                    return NodeStates.SUCCESS;
+                case (false):
+                    return NodeStates.FAILURE;
+                default:
+                    return NodeStates.FAILURE;
+            }
         }
         public static Node IsEnemyVisibleNode(Context context) {
             return new TaskContextNode(IsEnemyVisible, context, "Check Enemies Visible");

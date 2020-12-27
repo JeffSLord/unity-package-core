@@ -9,5 +9,9 @@ namespace Lord.Core
     {
         public string assignmentName;
         public int priority;
+        public WorkPriority(string assignmentName, int priority){
+            this.assignmentName = assignmentName;
+            this.priority = priority;
+        }
     }
 }

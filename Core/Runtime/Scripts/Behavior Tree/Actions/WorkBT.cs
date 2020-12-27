@@ -15,8 +15,8 @@ namespace Lord.Core {
             if(!context.data.TryGetValue<Settlement>("settlement", out _settlement)){
                 return NodeStates.FAILURE;
             }
-            CharacterBehavior _character;
-            if(!context.data.TryGetValue<CharacterBehavior>("character", out _character)){
+            Character _character;
+            if(!context.data.TryGetValue<Character>("character", out _character)){
                 return NodeStates.FAILURE;
             }
             foreach (WorkPriority _priority in _workPriorities){
