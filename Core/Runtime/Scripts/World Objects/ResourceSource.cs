@@ -59,12 +59,9 @@ namespace Lord.Core {
         protected override void Select1(GameObject selector, int option = 0) {
             PlayerController _playerController = selector.GetComponent<PlayerController>();
             if (_playerController != null) {
-                // AssignCharacter(_playerController.character);
-                // WorkBT workBT = new WorkBT(_playerController.character, this.gameObject, this.harvestPoint.position);
-                // _playerController.character.bt.context.resourceSource = this;
                 BehaviorTree _bt = _playerController.character.bt;
                 _bt.context.SetContext("resourceSource", this);
-                _bt.SetManualNode(WorkBT.WorkResourceSourceSequence(_bt.context));
+                // _bt.SetManualNode(WorkBT.WorkResourceSourceSequence(_bt.context));
             } else if (selector.GetComponent<Character>() != null) {
                 // AssignCharacter(selector.GetComponent<Character>());
             }

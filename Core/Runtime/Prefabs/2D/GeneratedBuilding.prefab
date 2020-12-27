@@ -77,4 +77,5 @@ MonoBehaviour:
   size: {x: 0, y: 0}
   position: {x: 0, y: 0}
   wallPrefab: {fileID: 69513529955241502, guid: b04c74b081516614a8531626386ddd5f, type: 3}
-  wallParent: {fileID: 30118705}
+  farmPrefab: {fileID: 0}
+  parentGO: {fileID: 30118705}

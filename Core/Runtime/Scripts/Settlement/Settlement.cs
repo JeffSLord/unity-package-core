@@ -5,15 +5,19 @@ namespace Lord.Core
 {
     public class Settlement: MonoBehaviour
     {
-        public int numCharacters;
-        public int numFarms;
+        // public int numCharacters;
+        // public int numFarms;
         public List<Character> characters;
         public List<GameObject> houses;
-        public List<GameObject> farms;
+        public List<WorkAssignment> farms;
         public GameObject characterPrefab;
         public GameObject housePrefab;
         public GameObject farmPrefab;
         
+        void Awake(){
+            houses = new List<GameObject>();
+            farms = new List<WorkAssignment>();
+        }
 
         void Start(){
             InitSettlement();
@@ -21,12 +25,13 @@ namespace Lord.Core
         }
 
         void InitSettlement(){
-            numCharacters = Random.Range(5, 10);
-            for (int i = 0; i < 20; i++)
+            // numCharacters = Random.Range(5, 10);
+            Vector2Int _buildingPosition;
+            Vector2Int _buildingSize;
+            for (int i = 0; i < 5; i++)
             {
                 bool _success = false;
-                Vector2Int _buildingPosition;
-                Vector2Int _buildingSize;
+                Debug.Log("GENERATING BUILDING: " + i.ToString());
                 while (!_success)
                 {
                     // int _posx = Random.Range(-100,100);
@@ -39,15 +44,15 @@ namespace Lord.Core
                         GridBuildingManager.instance.BuildRect(_buildingSize, _buildingPosition);
                         GridBuilding _house = Instantiate(housePrefab, new Vector3(_buildingPosition.x, _buildingPosition.y,0), Quaternion.identity).GetComponent<GridBuilding>();
                         _house.GenerateBuilding(_buildingSize, _buildingPosition);
+                        houses.Add(_house.gameObject);
                     }
-                }
-                
-
-
-                // houses.Add(_house);
-                // GameObject _character = Instantiate(characterPrefab, new Vector3(_posx, _posy, 0), Quaternion.identity);
-                // characters.Add(_character.GetComponent<Character>());
+                }           
             }
+            for(int i = 0; i < 5; i++){
+                _buildingPosition = GridBuilding.GenerateBuildingPosition();
+                GameObject _farm = Instantiate(farmPrefab, new Vector3(_buildingPosition.x, _buildingPosition.y, 0), Quaternion.identity);
+                farms.Add(new WorkAssignment(_farm));
+            }     
         }
 
         void InitCharacter(){
