@@ -54,4 +54,11 @@ namespace Lord.Core {
 
         }
     }
+
+    // [System.Serializable]
+    // public class CharacterNew
+    // {
+    //     public string name;
+    //     public 
+    // }
 }
