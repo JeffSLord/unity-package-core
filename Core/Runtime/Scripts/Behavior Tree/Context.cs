@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Lord.Core {
     public class Context {
         public Dictionary<string, object> data;
-
+        public Character character;
         public Context() {
             data = new Dictionary<string, object>();
         }

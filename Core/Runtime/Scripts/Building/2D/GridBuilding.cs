@@ -27,7 +27,7 @@ namespace Lord.Core
             int _y = Settlement.Rand.Next(min,max);
             return new Vector2Int(_x, _y);
         }
-        public static Vector2Int GenerateBuildingPosition(int min=-15, int max=15){
+        public static Vector2Int GenerateBuildingPosition(int min=-25, int max=25){
             int _x = Settlement.Rand.Next(min,max);
             int _y = Settlement.Rand.Next(min,max);
             return new Vector2Int(_x, _y);

@@ -7,10 +7,10 @@ namespace Lord.Core
     [System.Serializable]
     public class WorkPriority
     {
-        public string assignmentName;
+        public WorkType workType;
         public int priority;
-        public WorkPriority(string assignmentName, int priority){
-            this.assignmentName = assignmentName;
+        public WorkPriority(WorkType workType, int priority){
+            this.workType = workType;
             this.priority = priority;
         }
     }

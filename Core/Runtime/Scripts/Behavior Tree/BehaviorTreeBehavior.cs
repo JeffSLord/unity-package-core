@@ -7,10 +7,6 @@ namespace Lord.Core {
     // [RequireComponent(typeof(Character2D))]
     public class BehaviorTreeBehavior : MonoBehaviour {
         public BehaviorTree behaviorTree;
-
-        void Awake() {
-
-        }
         void Start() {
             behaviorTree = GetComponent<CharacterBehavior>().character.bt;
             if (behaviorTree.isGlobalRunning) {

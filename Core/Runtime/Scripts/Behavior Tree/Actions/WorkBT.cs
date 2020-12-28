@@ -21,8 +21,8 @@ namespace Lord.Core {
             }
             foreach (WorkPriority _priority in _workPriorities){
                 if(_priority.priority > 0){
-                    switch (_priority.assignmentName){
-                        case "farm":
+                    switch (_priority.workType){
+                        case WorkType.FARM:
                             foreach (WorkAssignment workAssignment in _settlement.farms){
                                 if(workAssignment.IsAvailable()){
                                     workAssignment.AssignCharacter(_character);

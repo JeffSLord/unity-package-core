@@ -27,8 +27,8 @@ namespace Lord.Core
             this.noiseRange = 20;
             this.bt = new BehaviorTree();
             this.workPriority = new List<WorkPriority>{
-                new WorkPriority("farm", 1),
-                new WorkPriority("haul", 1)
+                new WorkPriority(WorkType.FARM, 1),
+                new WorkPriority(WorkType.HAUL, 1)
             };
         }
         public bool IsEnemy(Character character) {

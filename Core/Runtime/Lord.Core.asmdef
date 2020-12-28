@@ -1,7 +1,9 @@
 {
     "name": "Lord.Core",
+    "rootNamespace": "",
     "references": [
-        "RotaryHeart.Core"
+        "RotaryHeart.Core",
+        "NavMeshComponents"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

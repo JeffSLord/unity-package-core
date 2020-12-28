@@ -9,5 +9,8 @@
     "email": "jeffscottlord@gmail.com",
     "url": "https://www.jeffslord.com"
   },
-  "type": "library"
+  "type": "library",
+  "dependencies": {
+    "com.h8man.2d.navmeshplus": "0.1.0"
+  }
 }
