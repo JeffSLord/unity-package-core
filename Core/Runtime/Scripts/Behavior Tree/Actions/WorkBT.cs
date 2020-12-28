@@ -37,7 +37,7 @@ namespace Lord.Core {
                     }   
                 }
             }
-            return NodeStates.SUCCESS;
+            return NodeStates.FAILURE;
         }
         public static Node GetWorkAssignmentNode(Context context){
             return new TaskContextNode(GetWorkAssignment, context, "Get work assignment");

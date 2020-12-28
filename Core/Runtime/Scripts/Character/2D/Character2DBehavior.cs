@@ -10,10 +10,11 @@ namespace Lord.Core {
             base.Start();
             navMeshAgent.updateRotation = false;
             navMeshAgent.updateUpAxis = false;
+            // navMeshAgent.
         }
         private bool LineOfSight(Transform target) {
             RaycastHit hit;
-            if (Vector3.Angle(target.position - transform.position, transform.forward) <= base.character.fov &&
+            if (Vector3.Angle(target.position - transform.position, transform.forward) <= base.character.Fov &&
                 Physics.Linecast(transform.position, target.position, out hit) &&
                 hit.collider.transform == target) {
                 return true;

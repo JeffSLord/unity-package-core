@@ -14,6 +14,7 @@ namespace Lord.Core {
         public Animator animator;
         public Selectable currentSelection;
         public BehaviorTreeBehavior btBehavior;
+        public bool isPlayer;
 
         protected override void Awake() {
             character = new Character();
@@ -21,15 +22,16 @@ namespace Lord.Core {
         protected override void Start() {
             base.Start();
             navMeshAgent = GetComponent<NavMeshAgent>();
+            // navMeshAgent.speed = character.MoveSpeed;
             animator = GetComponent<Animator>();
             btBehavior = GetComponent<BehaviorTreeBehavior>();
 
             btBehavior.behaviorTree.context.SetContext<Character>("character", this.character);
             btBehavior.behaviorTree.context.SetContext<CharacterBehavior>("characterBehavior", this);
-            btBehavior.behaviorTree.context.SetContext<float>("moveSpeed", this.character.moveSpeed);
-            btBehavior.behaviorTree.context.SetContext<float>("stoppingDistance", this.character.stoppingDistance);
+            btBehavior.behaviorTree.context.SetContext<float>("moveSpeed", this.character.MoveSpeed);
+            btBehavior.behaviorTree.context.SetContext<float>("stoppingDistance", this.character.StoppingDistance);
             btBehavior.behaviorTree.context.SetContextList<Waypoint>("waypoints", GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>().waypoints);
-            btBehavior.behaviorTree.context.SetContextList<WorkPriority>("workPriority", this.character.workPriority);
+            btBehavior.behaviorTree.context.SetContextList<WorkPriority>("workPriority", this.character.WorkPriority);
             btBehavior.behaviorTree.context.SetContext<Settlement>("settlement", GameObject.FindGameObjectWithTag("Settlement").GetComponent<SettlementBehavior>().settlement);
             btBehavior.behaviorTree.highPriorityNode = EnemyBT.EnemyDetectionNode(btBehavior.behaviorTree.context);
             btBehavior.behaviorTree.lowPriorityNode = WorkBT.Work(btBehavior.behaviorTree.context);
@@ -38,10 +40,24 @@ namespace Lord.Core {
             Debug.Log("Actual override is working? can this work?");
         }
         public void SetCharacterDestination(Vector3 position, float stoppingDistance) {
-            character.bt.context.SetContext("targetPosition", position);
-            character.bt.context.SetContext("stoppingDistance", stoppingDistance);
-            character.bt.SetManualNode(MoveBT.MoveToPoint(character.bt.context));
+            character.BT.context.SetContext("targetPosition", position);
+            character.BT.context.SetContext("stoppingDistance", stoppingDistance);
+            character.BT.SetManualNode(MoveBT.MoveToPoint(character.BT.context));
 
+        }
+
+        public void SetVisibility(bool isVisible){
+            if(!this.isPlayer){
+                SpriteRenderer[] _renderers = GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer _ren in _renderers){
+                    if(isVisible){
+                        _ren.enabled = true;
+                    }
+                    else{
+                        _ren.enabled = false;
+                    }
+                }
+            }
         }
     }
 }

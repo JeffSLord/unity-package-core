@@ -7,17 +7,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1701441671575219059, guid: d46a4d5c1a1d0c14cad1fa88e4cf1089, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1701441672156357021, guid: d46a4d5c1a1d0c14cad1fa88e4cf1089, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1701441672156357021, guid: d46a4d5c1a1d0c14cad1fa88e4cf1089, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.3096023
+      value: 5.01
       objectReference: {fileID: 0}
     - target: {fileID: 1701441672156357021, guid: d46a4d5c1a1d0c14cad1fa88e4cf1089, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.33346
+      value: -1.1
       objectReference: {fileID: 0}
     - target: {fileID: 1701441672156357021, guid: d46a4d5c1a1d0c14cad1fa88e4cf1089, type: 3}
       propertyPath: m_LocalPosition.z
@@ -53,7 +57,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1701441672156357022, guid: d46a4d5c1a1d0c14cad1fa88e4cf1089, type: 3}
       propertyPath: m_Name
-      value: Character Citizen
+      value: Character Citizen Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657651825418451603, guid: d46a4d5c1a1d0c14cad1fa88e4cf1089, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3657651825418451607, guid: d46a4d5c1a1d0c14cad1fa88e4cf1089, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3657651825418451607, guid: d46a4d5c1a1d0c14cad1fa88e4cf1089, type: 3}
       propertyPath: characterData

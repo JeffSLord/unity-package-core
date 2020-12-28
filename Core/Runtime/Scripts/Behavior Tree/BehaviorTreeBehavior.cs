@@ -8,7 +8,7 @@ namespace Lord.Core {
     public class BehaviorTreeBehavior : MonoBehaviour {
         public BehaviorTree behaviorTree;
         void Start() {
-            behaviorTree = GetComponent<CharacterBehavior>().character.bt;
+            behaviorTree = GetComponent<CharacterBehavior>().character.BT;
             if (behaviorTree.isGlobalRunning) {
                 RunBT();
             }
@@ -18,7 +18,7 @@ namespace Lord.Core {
             StartCoroutine(Execute());
         }
         private IEnumerator Execute() {
-            while (true) {
+            while (behaviorTree.isGlobalRunning) {
                 behaviorTree.isHighPriorityRunning = true;
                 behaviorTree.isLowPriorityRunning = true;
                 behaviorTree.isMnaualRunning = true;
