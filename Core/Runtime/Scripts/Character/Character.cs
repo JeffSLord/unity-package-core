@@ -9,6 +9,7 @@ namespace Lord.Core
     {
         // public static int idCount = 0;
         public static List<Character> allCharacters = new List<Character>();
+        public CharacterBehavior Behavior{get;set;}
         public int ID{get;set;}
         [SerializeField]
         public string Name{get;set;}
@@ -23,7 +24,9 @@ namespace Lord.Core
         public float NoiseRange{get;set;}
         public List<int> VisibleCharacterIDs{get;set;}
         public int Age {get;set;}
-        public Character(){
+        public bool IsPlayer{get;set;}
+        public Character(CharacterBehavior behavior, bool isPlayer=false){
+            this.Behavior = behavior;
             this.ID = Character.allCharacters.Count;
             Character.allCharacters.Add(this);
             this.MoveSpeed = 1.0f;
@@ -38,7 +41,7 @@ namespace Lord.Core
                 new WorkPriority(WorkType.FARM, 1),
                 new WorkPriority(WorkType.HAUL, 1)
             };
-            
+            this.IsPlayer = isPlayer;
         }
         // public Character(){
         // }

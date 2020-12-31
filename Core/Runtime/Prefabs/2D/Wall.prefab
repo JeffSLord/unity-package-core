@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 7781414262889993077}
   - component: {fileID: 5483447995186076255}
   - component: {fileID: 1262796586}
+  - component: {fileID: 301323981}
   m_Layer: 0
   m_Name: Display
   m_TagString: Untagged
@@ -210,4 +211,25 @@ MonoBehaviour:
   - {x: -0.5, y: 0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -25676
+  m_InstanceId: -1388
+--- !u!50 &301323981
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6596243012311845117}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

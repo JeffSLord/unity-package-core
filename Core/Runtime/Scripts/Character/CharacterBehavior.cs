@@ -14,10 +14,11 @@ namespace Lord.Core {
         public Animator animator;
         public Selectable currentSelection;
         public BehaviorTreeBehavior btBehavior;
-        public bool isPlayer;
+        [SerializeField]
+        private bool isPlayer;
 
         protected override void Awake() {
-            character = new Character();
+            character = new Character(this, isPlayer=this.isPlayer);
         }
         protected override void Start() {
             base.Start();
@@ -58,6 +59,9 @@ namespace Lord.Core {
                     }
                 }
             }
+        }
+        private void OnTriggerEnter2D(Collider2D other) {
+            Debug.Log("TEST TEST TEST TEST" + other.gameObject.name);
         }
     }
 }

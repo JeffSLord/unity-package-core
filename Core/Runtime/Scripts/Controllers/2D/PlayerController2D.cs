@@ -7,10 +7,13 @@ namespace Lord.Core {
     public class PlayerController2D : MonoBehaviour {
         public Character2DBehavior character;
         public MouseScan2D mouseScan;
+        public Camera camera;
         public float followMouseSpeed;
+        public float scrollSpeed;
 
         void Start() {
             mouseScan = GetComponent<MouseScan2D>();
+            this.camera = GetComponent<Camera>();
         }
         void Update() {
             InputHandler();
@@ -26,6 +29,14 @@ namespace Lord.Core {
             if (Input.GetMouseButton(1)) {
                 MouseHandler(1);
             }
+            ScrollHandler();
+        }
+
+        private void ScrollHandler(){
+            float _fov = camera.fieldOfView;
+            _fov -= Input.mouseScrollDelta.y * scrollSpeed;
+            _fov = Mathf.Clamp(_fov, 40, 120);
+            camera.fieldOfView = _fov;
         }
         private void MouseHandler(int mouseButton) {
             GameObject _hitObject;
