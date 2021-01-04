@@ -19,10 +19,10 @@ namespace Lord.Core
         public List<WorkPriority> WorkPriority{get;set;}
         public Settlement Settlement{get;set;}
         public int Faction{get;set;}
-        public float Fov{get;set;}
-        public float VoiceRange{get;set;}
-        public float NoiseRange{get;set;}
-        public List<int> VisibleCharacterIDs{get;set;}
+        // public float Fov{get;set;}
+        // public float VoiceRange{get;set;}
+        // public float NoiseRange{get;set;}
+        // public List<int> VisibleCharacterIDs{get;set;}
         public int Age {get;set;}
         public bool IsPlayer{get;set;}
         public Character(CharacterBehavior behavior, bool isPlayer=false){
@@ -32,11 +32,11 @@ namespace Lord.Core
             this.MoveSpeed = 1.0f;
             this.StoppingDistance = 1.0f;
             this.Faction = 1;
-            this.Fov = 90;
-            this.VoiceRange = 20;
-            this.NoiseRange = 20;
+            // this.Fov = 90;
+            // this.VoiceRange = 20;
+            // this.NoiseRange = 20;
             this.BT = new BehaviorTree();
-            this.VisibleCharacterIDs = new List<int>();
+            // this.VisibleCharacterIDs = new List<int>();
             this.WorkPriority = new List<WorkPriority>{
                 new WorkPriority(WorkType.FARM, 1),
                 new WorkPriority(WorkType.HAUL, 1)

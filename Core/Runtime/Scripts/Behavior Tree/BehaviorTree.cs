@@ -6,37 +6,38 @@ namespace Lord.Core{
     [System.Serializable]
     public class BehaviorTree
     {
-        public bool isGlobalRunning;
+        public bool IsGlobalRunning{get;set;}
         // public Dictionary<string, object> context;
         // how often to execute node
-        public Context context;
-        public float tickRate = 0.25f;
+        public Context Context{get;set;}
+        public float TickRate{get;set;}
         // manual priority (player override)
-        public Node manualPriorityNode;
-        public NodeStates manualPriorityState;
-        public bool isMnaualRunning;
+        public Node ManualPriorityNode{get;set;}
+        public NodeStates ManualPriorityState{get;set;}
+        public bool IsMnaualRunning{get;set;}
         // high priority (enemy detection, hunger)
-        public Node highPriorityNode;
-        public NodeStates highPriorityState;
-        public bool isHighPriorityRunning;
+        public Node HighPriorityNode{get;set;}
+        public NodeStates HighPriorityState{get;set;}
+        public bool IsHighPriorityRunning{get;set;}
         // low priority (jobs, etc)
-        public Node lowPriorityNode;
-        public NodeStates lowPriorityState;
-        public bool isLowPriorityRunning;
+        public Node LowPriorityNode{get;set;}
+        public NodeStates LowPriorityState{get;set;}
+        public bool IsLowPriorityRunning{get;set;}
 
         public BehaviorTree(){
-            this.context = new Context();
-            this.isGlobalRunning = true;
+            this.Context = new Context();
+            this.IsGlobalRunning = true;
+            this.TickRate = 0.25f;
         }
 
         public void SetManualNode(Node node) {
-            if (manualPriorityNode != null) {
+            if (ManualPriorityNode != null) {
                 // StopAllCoroutines();
-                this.isMnaualRunning = false;
+                this.IsMnaualRunning = false;
             }
-            manualPriorityNode = node;
-            if (manualPriorityNode != null) {
-                this.isMnaualRunning = true;
+            ManualPriorityNode = node;
+            if (ManualPriorityNode != null) {
+                this.IsMnaualRunning = true;
                 // StartCoroutine(Execute());
             }
         }

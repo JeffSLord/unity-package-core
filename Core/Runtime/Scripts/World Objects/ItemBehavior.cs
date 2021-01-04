@@ -16,8 +16,8 @@ namespace Lord.Core {
                 Debug.Log("Starting pickup...");
                 // ItemBT itemBT = new ItemBT(playerController.character, this);
                 BehaviorTreeBehavior _bt = playerController.characterBehavior.btBehavior;
-                _bt.behaviorTree.context.SetContext("item", this);
-                _bt.behaviorTree.SetManualNode(ItemBT.PickupSequence(_bt.behaviorTree.context));
+                _bt.behaviorTree.Context.SetContext("item", this);
+                _bt.behaviorTree.SetManualNode(ItemBT.PickupSequence(_bt.behaviorTree.Context));
             }
         }
     }
