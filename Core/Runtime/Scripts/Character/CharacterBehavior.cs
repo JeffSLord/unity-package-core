@@ -27,15 +27,17 @@ namespace Lord.Core {
             animator = GetComponent<Animator>();
             btBehavior = GetComponent<BehaviorTreeBehavior>();
 
-            btBehavior.behaviorTree.Context.SetContext<Character>("character", this.character);
-            btBehavior.behaviorTree.Context.SetContext<CharacterBehavior>("characterBehavior", this);
-            btBehavior.behaviorTree.Context.SetContext<float>("moveSpeed", this.character.MoveSpeed);
-            btBehavior.behaviorTree.Context.SetContext<float>("stoppingDistance", this.character.StoppingDistance);
-            btBehavior.behaviorTree.Context.SetContextList<Waypoint>("waypoints", GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>().waypoints);
-            btBehavior.behaviorTree.Context.SetContextList<WorkPriority>("workPriority", this.character.WorkPriority);
-            btBehavior.behaviorTree.Context.SetContext<Settlement>("settlement", GameObject.FindGameObjectWithTag("Settlement").GetComponent<SettlementBehavior>().settlement);
-            btBehavior.behaviorTree.HighPriorityNode = EnemyBT.EnemyDetectionNode(btBehavior.behaviorTree.Context);
-            btBehavior.behaviorTree.LowPriorityNode = WorkBT.Work(btBehavior.behaviorTree.Context);
+            btBehavior.behaviorTree.Context.CharacterId = this.character.ID;
+
+            // btBehavior.behaviorTree.Context.SetContext<Character>("character", this.character);
+            // btBehavior.behaviorTree.Context.SetContext<CharacterBehavior>("characterBehavior", this);
+            // btBehavior.behaviorTree.Context.SetContext<float>("moveSpeed", this.character.MoveSpeed);
+            // btBehavior.behaviorTree.Context.SetContext<float>("stoppingDistance", this.character.StoppingDistance);
+            // btBehavior.behaviorTree.Context.SetContextList<Waypoint>("waypoints", GameObject.FindGameObjectWithTag("Stage").GetComponent<Stage>().waypoints);
+            // btBehavior.behaviorTree.Context.SetContextList<WorkPriority>("workPriority", this.character.WorkPriority);
+            // btBehavior.behaviorTree.Context.SetContext<Settlement>("settlement", GameObject.FindGameObjectWithTag("Settlement").GetComponent<SettlementBehavior>().settlement);
+            // btBehavior.behaviorTree.HighPriorityNode = EnemyBT.EnemyDetectionNode(btBehavior.behaviorTree.Context);
+            // btBehavior.behaviorTree.LowPriorityNode = WorkBT.Work(btBehavior.behaviorTree.Context);
         }
         protected override void Select0(GameObject selector, int option = 0) {
             Debug.Log("Actual override is working? can this work?");

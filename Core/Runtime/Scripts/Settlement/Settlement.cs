@@ -8,7 +8,7 @@ namespace Lord.Core{
     {
         public static System.Random Rand = new System.Random();
         // public List<Character> characters;
-        public static List<Settlement> allSettlements = new List<Settlement>();
+        public static List<Settlement> AllSettlements {get;set;} = new List<Settlement>();
         public int ID{get;set;}
         public List<GameObject> houses;
         public List<WorkAssignment> farms;
@@ -24,8 +24,8 @@ namespace Lord.Core{
         public List<Vector2Int> wallPositionsList;
 
         public Settlement(){
-            this.ID = Settlement.allSettlements.Count;
-            Settlement.allSettlements.Add(this);
+            this.ID = Settlement.AllSettlements.Count;
+            Settlement.AllSettlements.Add(this);
             this.houses = new List<GameObject>();
             this.farms = new List<WorkAssignment>();
             // this.housePositions = new List<Vector2Int>();
@@ -40,7 +40,7 @@ namespace Lord.Core{
             GenerateSettlement();
         }
         public static Settlement GetSettlement(int id){
-            return Settlement.allSettlements[id];
+            return Settlement.AllSettlements[id];
         }
 
         private void GenerateSettlement(){
@@ -49,29 +49,6 @@ namespace Lord.Core{
             GenerateFarmPositions();
         }
 
-        // private void GenerateBuildings(){
-            // Vector2Int _buildingPosition;
-            // Vector2Int _buildingSize;
-            // for (int i = 0; i < 5; i++){
-            //     bool _success = false;
-            //     while (!_success){
-            //         _buildingSize = GridBuilding.GenerateRectBuildingSize();
-            //         _buildingPosition = GridBuilding.GenerateBuildingPosition();
-            //         if(GridBuildingManager.instance.CheckValidRectPlacement(_buildingSize, _buildingPosition)){
-            //             _success = true;
-            //             GridBuildingManager.instance.BuildRect(_buildingSize, _buildingPosition);
-            //             this.housePositions.Add(_buildingPosition);
-            //             this.houseSizes.Add(_buildingSize);
-            //         }
-            //     }           
-            // }
-            // for(int i = 0; i < 5; i++){
-            //     _buildingPosition = GridBuilding.GenerateBuildingPosition();
-            //     this.farmPositions.Add(_buildingPosition);
-            //     // GameObject _farm = GameObject.Instantiate(farmPrefab, new Vector3(_buildingPosition.x, _buildingPosition.y, 0), Quaternion.identity);
-            //     // farms.Add(new WorkAssignment(_farm));
-            // }
-        // }
         private void GenerateBuildingPositions(){
             for (int i = 0; i < 10; i++){
                 bool _searching = true;

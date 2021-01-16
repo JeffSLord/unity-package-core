@@ -4,12 +4,20 @@ using System.Linq;
 using UnityEngine;
 
 namespace Lord.Core {
+    [System.Serializable]
     public class Context {
         public Dictionary<string, object> data;
-        // public Character character;
+        public int CharacterId{get;set;}
+        public List<int> DetectedCharacterIDs{get;set;}
+        public List<int> DetectedEnemeyCharacterIDs{get;set;}
         public Context() {
             data = new Dictionary<string, object>();
         }
+        public Context(int characterId){
+            this.CharacterId = characterId;
+            this.DetectedCharacterIDs = new List<int>();
+            this.DetectedEnemeyCharacterIDs = new List<int>();
+        } 
 
         public T SetContext<T>(string name, T obj) {
             data[name] = obj;
