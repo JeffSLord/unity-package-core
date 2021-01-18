@@ -19,6 +19,7 @@ namespace Lord.Core {
 
         protected override void Awake() {
             character = new Character(this, isPlayer=this.isPlayer);
+            Debug.Log("Character ID: " + character.ID);
         }
         protected override void Start() {
             base.Start();

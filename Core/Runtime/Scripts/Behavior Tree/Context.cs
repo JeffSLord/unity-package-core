@@ -10,6 +10,10 @@ namespace Lord.Core {
         public int CharacterId{get;set;}
         public List<int> DetectedCharacterIDs{get;set;}
         public List<int> DetectedEnemeyCharacterIDs{get;set;}
+        public List<int> EnemyMeleeIDs{get;set;}
+        public List<int> EnemyRangeIDs{get;set;}
+        public float MeleeDistance{get;set;}
+        public float RangeDistance{get;set;}
         public Context() {
             data = new Dictionary<string, object>();
         }
