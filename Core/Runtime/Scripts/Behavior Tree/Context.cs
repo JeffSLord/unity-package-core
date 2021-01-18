@@ -58,5 +58,9 @@ namespace Lord.Core {
                 return true;
             }
         }
+
+        // public bool CheckContext(string name){
+        //     if
+        // }
     }
 }
