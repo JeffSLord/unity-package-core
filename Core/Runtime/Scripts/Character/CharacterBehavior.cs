@@ -15,6 +15,7 @@ namespace Lord.Core
         public Selectable currentSelection;
         [SerializeField]
         private bool isPlayer;
+        private Vector3 lastPosition;
 
         protected override void Awake()
         {
@@ -27,6 +28,7 @@ namespace Lord.Core
             character.NavMeshAgent = GetComponent<NavMeshAgent>();
             character.Animator = GetComponent<Animator>();
             character.BT = GetComponent<BehaviorTreeBehavior>().BT;
+            character.Rigidbody = GetComponent<Rigidbody>();
 
             // Test
             // character.BT.HighPriorityNode = CharacterBT.CharacterBehavior(character.BT.Context);
@@ -67,6 +69,13 @@ namespace Lord.Core
 
         void Update()
         {
+            // this.character.Animator.SetBool("IsMoving", this.character.Rigidbody.velocity.magnitude > 0);
+            if(this.transform.position != lastPosition){
+                this.character.Animator.SetBool("IsMoving", true);
+            } else{
+                this.character.Animator.SetBool("IsMoving", false);
+            }
+            lastPosition = this.transform.position;
             if (character.OnQuest)
             {
                 // quest behavior
@@ -80,6 +89,7 @@ namespace Lord.Core
                     Character _closestEnemy = character.FindClosestEnemy();
                     if (_closestEnemy != null)
                     {
+                        transform.rotation = Quaternion.LookRotation((_closestEnemy.Behavior.transform.position - transform.position), Vector3.up);
                         float _distance = Vector3.Distance(this.transform.position, _closestEnemy.Behavior.transform.position);
                         // are you close enough to attack?
                         if (_distance < character.AttackRange)

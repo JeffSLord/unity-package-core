@@ -101,7 +101,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: b587eaf1bc0e6364b92f87eaba10155a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -194,11 +194,15 @@ MonoBehaviour:
     AttackRange: 0
     IsFighter: 0
     AttackCooldown: 0
+    MaxAttackCooldown: 0
     BlockCooldown: 0
+    MaxBlockCooldown: 0
     KnockedOut: 0
     IsAttacking: 0
     CanMove: 0
     CanAttack: 0
+    CanBlock: 0
+    CanDodge: 0
   currentSelection: {fileID: 0}
   isPlayer: 0
 --- !u!1001 &9053726926524776066

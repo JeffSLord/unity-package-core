@@ -36,6 +36,7 @@ namespace Lord.Core
         public Animator Animator;
         public Vector3 MovePosition;
         public Transform MoveTransform;
+        public Rigidbody Rigidbody;
         public float MoveSpeed;
         public float StoppingDistance;
         public float Hunger;
