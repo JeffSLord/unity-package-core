@@ -26,7 +26,7 @@ namespace Lord.Core {
                     //! replace this with pickup
                     Destroy(this.gameObject);
                 }
-                character.navMeshAgent.destination = this.transform.position;
+                character.character.NavMeshAgent.destination = this.transform.position;
                 yield return new WaitForSeconds(0.25f);
             }
         }

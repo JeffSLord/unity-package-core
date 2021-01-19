@@ -4,44 +4,46 @@ using UnityEngine;
 
 namespace Lord.Core {
     public static class EnemyBT {
-        private static NodeStates IsEnemyVisible(Context context) {
-            // just check if it is within a specific range for now
-            // add sight later
-            bool _isEnemyVisible;
-            if (!context.data.TryGetValue<bool>("isEnemyVisible", out _isEnemyVisible)) {
+        private static NodeStates IsEnemyDetected(Context context) {
+            if(context.Character.EnemyIDsDetected.Count > 0){
+                return NodeStates.SUCCESS;
+            } else{
                 return NodeStates.FAILURE;
             }
-            switch (_isEnemyVisible) {
-                case (true):
-                    Debug.Log("Enememy is visible");
-                    return NodeStates.SUCCESS;
-                case (false):
-                    return NodeStates.FAILURE;
-                default:
-                    return NodeStates.FAILURE;
-            }
-        }
-        public static Node IsEnemyVisibleNode(Context context) {
-            return new TaskContextNode(IsEnemyVisible, context, "Check Enemies Visible");
         }
         private static NodeStates IsAlertedOfEnemy(Context context) {
             return NodeStates.FAILURE;
         }
-        public static Node IsAlertedOfEnemyNode(Context context) {
-            return new TaskContextNode(IsAlertedOfEnemy, context, "Check Enemies Alert");
+        private static NodeStates SetEnemyTransform(Context context){
+            context.Character.MoveTransform = Character.AllCharacters[context.Character.EnemyIDsDetected[0]].Behavior.transform;
+            return NodeStates.SUCCESS;
         }
-        public static Node IsEnemyDetectedNode(Context context) {
-            return new SelectorParallel(new List<Node> {
-                EnemyBT.IsEnemyVisibleNode(context),
-                EnemyBT.IsAlertedOfEnemyNode(context)
-            });
+        public static Node IsEnemyDetectedCheck(Context context) {
+            return new SelectorParallel(
+                new List<Node> {
+                    new TaskContextNode(EnemyBT.IsEnemyDetected, context, "Is enemy detected?"),
+                    new TaskContextNode(EnemyBT.IsAlertedOfEnemy, context, "Is alerted of enemy?")
+                }
+            );
         }
-        public static Node EnemyDetectionNode(Context context) {
-            // MoveBT _moveBT = new MoveBT(context.character, new Vector3(0, 0, 0));
-            return new SequenceParallel(new List<Node> {
-                EnemyBT.IsEnemyDetectedNode(context),
-                MoveBT.FollowTransform(context)
-            });
+        public static Node EnemyDetection(Context context) {
+            return new SequenceSeries(
+                new List<Node> {
+                    new TaskContextNode(EnemyBT.IsEnemyDetected, context, "Is enemy detected?"),
+                    new TaskContextNode(EnemyBT.SetEnemyTransform, context, "Set Enemy Transform."),
+                    new DebugNode("TEST DEBUG PRINT"),
+                    MoveBT.FollowTransform(context),
+                    new DebugNode("ATTACK HERE")
+                }
+            );
+        }
+
+        public static Node EnemyHandler(Context context){
+            return new SequenceSeries(
+                new List<Node>{
+                    EnemyBT.EnemyDetection(context)
+                }
+            );
         }
     }
 }

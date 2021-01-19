@@ -8,8 +8,8 @@ namespace Lord.Core {
     public class Character2DBehavior : CharacterBehavior {
         protected override void Start() {
             base.Start();
-            navMeshAgent.updateRotation = false;
-            navMeshAgent.updateUpAxis = false;
+            character.NavMeshAgent.updateRotation = false;
+            character.NavMeshAgent.updateUpAxis = false;
             // navMeshAgent.
         }
         // private bool LineOfSight(Transform target) {

@@ -24,10 +24,10 @@ namespace Lord.Core{
                 otherCharacter.Behavior.SetVisibility(true);
             }
             //! Behavior Tree
-            if(Behavior.characterBehavior.character.IsEnemy(otherCharacter)){
-                Behavior.characterBehavior.character.BT.Context.SetContextList<Character>("enemiesInRange", new List<Character>{otherCharacter});
-                Behavior.characterBehavior.character.BT.Context.SetContext<bool>("isEnemyVisible", true);
-            }
+            // if(Behavior.characterBehavior.character.IsEnemy(otherCharacter)){
+            //     Behavior.characterBehavior.character.BT.Context.SetContextList<Character>("enemiesInRange", new List<Character>{otherCharacter});
+            //     Behavior.characterBehavior.character.BT.Context.SetContext<bool>("isEnemyVisible", true);
+            // }
         }
         public void OnCharacterExitVision(Character otherCharacter, bool setVisibility){
             VisibleCharacterIDs.Remove(otherCharacter.ID);
@@ -35,12 +35,12 @@ namespace Lord.Core{
                 otherCharacter.Behavior.SetVisibility(false);
             }
             //! Behavior Tree
-            if(Behavior.characterBehavior.character.IsEnemy(otherCharacter)){
-                Behavior.characterBehavior.character.BT.Context.RemoveContextList<Character>("enemiesInRange", new List<Character>{otherCharacter});
-                if(VisibleCharacterIDs.Count == 0){
-                    Behavior.characterBehavior.character.BT.Context.SetContext<bool>("isEnemyVisible", true);
-                }
-            }
+            // if(Behavior.characterBehavior.character.IsEnemy(otherCharacter)){
+            //     Behavior.characterBehavior.character.BT.Context.RemoveContextList<Character>("enemiesInRange", new List<Character>{otherCharacter});
+            //     if(VisibleCharacterIDs.Count == 0){
+            //         Behavior.characterBehavior.character.BT.Context.SetContext<bool>("isEnemyVisible", true);
+            //     }
+            // }
         }
     }
 }

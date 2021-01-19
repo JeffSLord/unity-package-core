@@ -6,10 +6,14 @@ using UnityEngine;
 namespace Lord.Core {
     // [RequireComponent(typeof(Character2D))]
     public class BehaviorTreeBehavior : MonoBehaviour {
-        public BehaviorTree behaviorTree;
+        public BehaviorTree BT;
+
+        void Awake(){
+            BT = new BehaviorTree();
+        }
         void Start() {
-            behaviorTree = GetComponent<CharacterBehavior>().character.BT;
-            if (behaviorTree.IsGlobalRunning) {
+            BT.Context.SetCharacter(GetComponent<CharacterBehavior>().character.ID);
+            if (BT.IsGlobalRunning) {
                 RunBT();
             }
         }
@@ -18,56 +22,56 @@ namespace Lord.Core {
             StartCoroutine(Execute());
         }
         private IEnumerator Execute() {
-            while (behaviorTree.IsGlobalRunning) {
-                behaviorTree.IsHighPriorityRunning = true;
-                behaviorTree.IsLowPriorityRunning = true;
-                behaviorTree.IsMnaualRunning = true;
+            while (BT.IsGlobalRunning) {
+                BT.IsHighPriorityRunning = true;
+                BT.IsLowPriorityRunning = true;
+                BT.IsMnaualRunning = true;
                 Debug.Log("BT Tick");
                 // manual task
-                if (behaviorTree.ManualPriorityNode != null) {
-                    behaviorTree.IsHighPriorityRunning = false;
-                    behaviorTree.IsLowPriorityRunning = false;
-                    behaviorTree.ManualPriorityState = behaviorTree.ManualPriorityNode.Evaluate();
-                    switch (behaviorTree.ManualPriorityState) {
+                if (BT.ManualPriorityNode != null) {
+                    BT.IsHighPriorityRunning = false;
+                    BT.IsLowPriorityRunning = false;
+                    BT.ManualPriorityState = BT.ManualPriorityNode.Evaluate();
+                    switch (BT.ManualPriorityState) {
                         case NodeStates.SUCCESS:
-                            behaviorTree.IsHighPriorityRunning = true;
-                            behaviorTree.IsLowPriorityRunning = true;
-                            behaviorTree.SetManualNode(null);
+                            BT.IsHighPriorityRunning = true;
+                            BT.IsLowPriorityRunning = true;
+                            BT.SetManualNode(null);
                             break;
                         case NodeStates.FAILURE:
-                            behaviorTree.IsHighPriorityRunning = true;
-                            behaviorTree.IsLowPriorityRunning = true;
-                            behaviorTree.SetManualNode(null);
+                            BT.IsHighPriorityRunning = true;
+                            BT.IsLowPriorityRunning = true;
+                            BT.SetManualNode(null);
                             break;
                         case NodeStates.RUNNING:
-                            behaviorTree.IsHighPriorityRunning = false;
-                            behaviorTree.IsLowPriorityRunning = false;
+                            BT.IsHighPriorityRunning = false;
+                            BT.IsLowPriorityRunning = false;
                             break;
                         default:
                             break;
                     }
                 } else {
                     // high priority
-                    if (behaviorTree.IsHighPriorityRunning && behaviorTree.HighPriorityNode != null) {
-                        behaviorTree.HighPriorityState = behaviorTree.HighPriorityNode.Evaluate();
-                        switch (behaviorTree.HighPriorityState) {
+                    if (BT.IsHighPriorityRunning && BT.HighPriorityNode != null) {
+                        BT.HighPriorityState = BT.HighPriorityNode.Evaluate();
+                        switch (BT.HighPriorityState) {
                             case NodeStates.SUCCESS:
-                                behaviorTree.IsLowPriorityRunning = true;
+                                BT.IsLowPriorityRunning = true;
                                 break;
                             case NodeStates.FAILURE: // 
-                                behaviorTree.IsLowPriorityRunning = true;
+                                BT.IsLowPriorityRunning = true;
                                 break;
                             case NodeStates.RUNNING:
-                                behaviorTree.IsLowPriorityRunning = false;
+                                BT.IsLowPriorityRunning = false;
                                 break;
                             default:
                                 break;
                         }
                     }
                     // low priority
-                    if (behaviorTree.IsLowPriorityRunning && behaviorTree.LowPriorityNode != null) {
-                        behaviorTree.LowPriorityState = behaviorTree.LowPriorityNode.Evaluate();
-                        switch (behaviorTree.LowPriorityState) {
+                    if (BT.IsLowPriorityRunning && BT.LowPriorityNode != null) {
+                        BT.LowPriorityState = BT.LowPriorityNode.Evaluate();
+                        switch (BT.LowPriorityState) {
                             case NodeStates.RUNNING:
                                 break;
                             case NodeStates.SUCCESS:
@@ -79,7 +83,7 @@ namespace Lord.Core {
                         }
                     }
                 }
-                yield return new WaitForSeconds(behaviorTree.TickRate);
+                yield return new WaitForSeconds(BT.TickRate);
             }
         }
     }

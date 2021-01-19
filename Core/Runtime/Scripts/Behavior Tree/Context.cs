@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Lord.Core {
     [System.Serializable]
     public class Context {
         public Dictionary<string, object> data;
-        public int CharacterId{get;set;}
-        public List<int> DetectedCharacterIDs{get;set;}
-        public List<int> DetectedEnemeyCharacterIDs{get;set;}
-        public List<int> EnemyMeleeIDs{get;set;}
-        public List<int> EnemyRangeIDs{get;set;}
-        public float MeleeDistance{get;set;}
-        public float RangeDistance{get;set;}
+        public int CharacterId;
+        [System.NonSerialized]
+        public Character Character;
         public Context() {
             data = new Dictionary<string, object>();
         }
-        public Context(int characterId){
-            this.CharacterId = characterId;
-            this.DetectedCharacterIDs = new List<int>();
-            this.DetectedEnemeyCharacterIDs = new List<int>();
-        } 
+        public Context(int characterID){
+            data = new Dictionary<string, object>();
+            SetCharacter(characterID);
+        }
+        public void SetCharacter(int characterID){
+            this.CharacterId = characterID;
+            this.Character = Character.GetCharacter(this.CharacterId);
+        }
 
         public T SetContext<T>(string name, T obj) {
             data[name] = obj;
@@ -59,8 +59,21 @@ namespace Lord.Core {
             }
         }
 
-        // public bool CheckContext(string name){
-        //     if
-        // }
+        public bool ValidateRequest(string name){
+            object _obj;
+            if(this.data.TryGetValue(name, out _obj)){
+                return true;
+            } else{
+                return false;
+            }
+        }
+        public bool ValidateRequest(List<string> names){
+            foreach (string name in names){
+                if(!ValidateRequest(name)){
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
